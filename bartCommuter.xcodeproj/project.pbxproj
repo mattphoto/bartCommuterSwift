@@ -1,0 +1,424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C99018951B547D73008BAB3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018941B547D73008BAB3A /* AppDelegate.swift */; };
+		C99018971B547D73008BAB3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018961B547D73008BAB3A /* ViewController.swift */; };
+		C990189A1B547D73008BAB3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C99018981B547D73008BAB3A /* Main.storyboard */; };
+		C990189C1B547D73008BAB3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C990189B1B547D73008BAB3A /* Images.xcassets */; };
+		C990189F1B547D73008BAB3A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C990189D1B547D73008BAB3A /* LaunchScreen.xib */; };
+		C99018AB1B547D73008BAB3A /* bartCommuterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018AA1B547D73008BAB3A /* bartCommuterTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C99018A51B547D73008BAB3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C99018871B547D73008BAB3A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C990188E1B547D73008BAB3A;
+			remoteInfo = bartCommuter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C990188F1B547D73008BAB3A /* bartCommuter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bartCommuter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C99018931B547D73008BAB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C99018941B547D73008BAB3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C99018961B547D73008BAB3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C99018991B547D73008BAB3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C990189B1B547D73008BAB3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C990189E1B547D73008BAB3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		C99018A41B547D73008BAB3A /* bartCommuterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bartCommuterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C99018A91B547D73008BAB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C99018AA1B547D73008BAB3A /* bartCommuterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bartCommuterTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C990188C1B547D73008BAB3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99018A11B547D73008BAB3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C99018861B547D73008BAB3A = {
+			isa = PBXGroup;
+			children = (
+				C99018911B547D73008BAB3A /* bartCommuter */,
+				C99018A71B547D73008BAB3A /* bartCommuterTests */,
+				C99018901B547D73008BAB3A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C99018901B547D73008BAB3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C990188F1B547D73008BAB3A /* bartCommuter.app */,
+				C99018A41B547D73008BAB3A /* bartCommuterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C99018911B547D73008BAB3A /* bartCommuter */ = {
+			isa = PBXGroup;
+			children = (
+				C99018941B547D73008BAB3A /* AppDelegate.swift */,
+				C99018961B547D73008BAB3A /* ViewController.swift */,
+				C99018981B547D73008BAB3A /* Main.storyboard */,
+				C990189B1B547D73008BAB3A /* Images.xcassets */,
+				C990189D1B547D73008BAB3A /* LaunchScreen.xib */,
+				C99018921B547D73008BAB3A /* Supporting Files */,
+			);
+			path = bartCommuter;
+			sourceTree = "<group>";
+		};
+		C99018921B547D73008BAB3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C99018931B547D73008BAB3A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C99018A71B547D73008BAB3A /* bartCommuterTests */ = {
+			isa = PBXGroup;
+			children = (
+				C99018AA1B547D73008BAB3A /* bartCommuterTests.swift */,
+				C99018A81B547D73008BAB3A /* Supporting Files */,
+			);
+			path = bartCommuterTests;
+			sourceTree = "<group>";
+		};
+		C99018A81B547D73008BAB3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C99018A91B547D73008BAB3A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C990188E1B547D73008BAB3A /* bartCommuter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C99018AE1B547D73008BAB3A /* Build configuration list for PBXNativeTarget "bartCommuter" */;
+			buildPhases = (
+				C990188B1B547D73008BAB3A /* Sources */,
+				C990188C1B547D73008BAB3A /* Frameworks */,
+				C990188D1B547D73008BAB3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bartCommuter;
+			productName = bartCommuter;
+			productReference = C990188F1B547D73008BAB3A /* bartCommuter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C99018A31B547D73008BAB3A /* bartCommuterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C99018B11B547D73008BAB3A /* Build configuration list for PBXNativeTarget "bartCommuterTests" */;
+			buildPhases = (
+				C99018A01B547D73008BAB3A /* Sources */,
+				C99018A11B547D73008BAB3A /* Frameworks */,
+				C99018A21B547D73008BAB3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C99018A61B547D73008BAB3A /* PBXTargetDependency */,
+			);
+			name = bartCommuterTests;
+			productName = bartCommuterTests;
+			productReference = C99018A41B547D73008BAB3A /* bartCommuterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C99018871B547D73008BAB3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = Matt;
+				TargetAttributes = {
+					C990188E1B547D73008BAB3A = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					C99018A31B547D73008BAB3A = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = C990188E1B547D73008BAB3A;
+					};
+				};
+			};
+			buildConfigurationList = C990188A1B547D73008BAB3A /* Build configuration list for PBXProject "bartCommuter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C99018861B547D73008BAB3A;
+			productRefGroup = C99018901B547D73008BAB3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C990188E1B547D73008BAB3A /* bartCommuter */,
+				C99018A31B547D73008BAB3A /* bartCommuterTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C990188D1B547D73008BAB3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C990189A1B547D73008BAB3A /* Main.storyboard in Resources */,
+				C990189F1B547D73008BAB3A /* LaunchScreen.xib in Resources */,
+				C990189C1B547D73008BAB3A /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99018A21B547D73008BAB3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C990188B1B547D73008BAB3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C99018971B547D73008BAB3A /* ViewController.swift in Sources */,
+				C99018951B547D73008BAB3A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99018A01B547D73008BAB3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C99018AB1B547D73008BAB3A /* bartCommuterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C99018A61B547D73008BAB3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C990188E1B547D73008BAB3A /* bartCommuter */;
+			targetProxy = C99018A51B547D73008BAB3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C99018981B547D73008BAB3A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C99018991B547D73008BAB3A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C990189D1B547D73008BAB3A /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C990189E1B547D73008BAB3A /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C99018AC1B547D73008BAB3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C99018AD1B547D73008BAB3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C99018AF1B547D73008BAB3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = bartCommuter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C99018B01B547D73008BAB3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = bartCommuter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C99018B21B547D73008BAB3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = bartCommuterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bartCommuter.app/bartCommuter";
+			};
+			name = Debug;
+		};
+		C99018B31B547D73008BAB3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = bartCommuterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bartCommuter.app/bartCommuter";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C990188A1B547D73008BAB3A /* Build configuration list for PBXProject "bartCommuter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C99018AC1B547D73008BAB3A /* Debug */,
+				C99018AD1B547D73008BAB3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C99018AE1B547D73008BAB3A /* Build configuration list for PBXNativeTarget "bartCommuter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C99018AF1B547D73008BAB3A /* Debug */,
+				C99018B01B547D73008BAB3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C99018B11B547D73008BAB3A /* Build configuration list for PBXNativeTarget "bartCommuterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C99018B21B547D73008BAB3A /* Debug */,
+				C99018B31B547D73008BAB3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C99018871B547D73008BAB3A /* Project object */;
+}

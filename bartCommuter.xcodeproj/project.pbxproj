@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8128F35BAE1EF975A0AAE2D1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8378763AC586312C4B4ADE /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C99018951B547D73008BAB3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018941B547D73008BAB3A /* AppDelegate.swift */; };
 		C99018971B547D73008BAB3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018961B547D73008BAB3A /* ViewController.swift */; };
 		C990189A1B547D73008BAB3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C99018981B547D73008BAB3A /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB3012CB9A2D02F32702664D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C990188F1B547D73008BAB3A /* bartCommuter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bartCommuter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99018931B547D73008BAB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C99018941B547D73008BAB3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +38,8 @@
 		C99018A41B547D73008BAB3A /* bartCommuterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bartCommuterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99018A91B547D73008BAB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C99018AA1B547D73008BAB3A /* bartCommuterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bartCommuterTests.swift; sourceTree = "<group>"; };
+		CC67B6D777EFF0EEC853AAB4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EF8378763AC586312C4B4ADE /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8128F35BAE1EF975A0AAE2D1 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +61,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3424EAC739D1F05A5A2267F4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BB3012CB9A2D02F32702664D /* Pods.debug.xcconfig */,
+				CC67B6D777EFF0EEC853AAB4 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5BFB4795A6D1F12605CE2396 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF8378763AC586312C4B4ADE /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C99018861B547D73008BAB3A = {
 			isa = PBXGroup;
 			children = (
 				C99018911B547D73008BAB3A /* bartCommuter */,
 				C99018A71B547D73008BAB3A /* bartCommuterTests */,
 				C99018901B547D73008BAB3A /* Products */,
+				3424EAC739D1F05A5A2267F4 /* Pods */,
+				5BFB4795A6D1F12605CE2396 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,9 +143,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C99018AE1B547D73008BAB3A /* Build configuration list for PBXNativeTarget "bartCommuter" */;
 			buildPhases = (
+				7BF7E58ED6C50420E679B821 /* Check Pods Manifest.lock */,
 				C990188B1B547D73008BAB3A /* Sources */,
 				C990188C1B547D73008BAB3A /* Frameworks */,
 				C990188D1B547D73008BAB3A /* Resources */,
+				BA5D8BF8730574B4F3AA1680 /* Embed Pods Frameworks */,
+				C82E364F54FA0E817F1B51F1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,6 +233,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7BF7E58ED6C50420E679B821 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BA5D8BF8730574B4F3AA1680 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C82E364F54FA0E817F1B51F1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C990188B1B547D73008BAB3A /* Sources */ = {
@@ -338,6 +413,7 @@
 		};
 		C99018AF1B547D73008BAB3A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB3012CB9A2D02F32702664D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = bartCommuter/Info.plist;
@@ -348,6 +424,7 @@
 		};
 		C99018B01B547D73008BAB3A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC67B6D777EFF0EEC853AAB4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = bartCommuter/Info.plist;
@@ -409,6 +486,7 @@
 				C99018B01B547D73008BAB3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C99018B11B547D73008BAB3A /* Build configuration list for PBXNativeTarget "bartCommuterTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +495,7 @@
 				C99018B31B547D73008BAB3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

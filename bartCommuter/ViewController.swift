@@ -45,9 +45,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! UITableViewCell
-        cell.backgroundColor = UIColor.yellowColor()
+        var cellDisplay : String
         
+        // if row is odd, then cellDisplay = train
+        // if row is even then cellDisplay = chosenTrain
+        
+        
+//        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! ChosenTrainTableCell
+//        cell.backgroundColor = UIColor.yellowColor()
+//        
+//
+        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
+        cell.backgroundColor = UIColor.yellowColor()
+
         
         cell.textLabel?.text = "blah"
         // heightforrow
@@ -65,7 +75,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
         println(self.hour)
     }
+    func getApiKey() -> String {
     
+        let pListPath = NSBundle.mainBundle().pathForResource("apiKey", ofType: "plist")
+        let pListKey = NSDictionary(contentsOfFile: pListPath!)
+        let KEY = pListKey!["APIKEY"]! as! String
+        return KEY
+    }
     
     func getTrainDirection() {
         
@@ -73,7 +89,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let CMD = "depart"
         let ORIG = "WOAK"
         let DEST = "EMBR"
-        let KEY = "Z5LP-U799-IDSQ-DT35"
+        let KEY = getApiKey()
         let DATE = "now"
         let B = 2
         let A = 4
@@ -167,6 +183,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //                println()
 //                println()
 
+                
+                /* var trainList : [train] */
                 for etd in etds{
                     var train : [String] = []
 

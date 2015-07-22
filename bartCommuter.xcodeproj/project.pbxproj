@@ -14,6 +14,9 @@
 		C990189C1B547D73008BAB3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C990189B1B547D73008BAB3A /* Images.xcassets */; };
 		C990189F1B547D73008BAB3A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C990189D1B547D73008BAB3A /* LaunchScreen.xib */; };
 		C99018AB1B547D73008BAB3A /* bartCommuterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018AA1B547D73008BAB3A /* bartCommuterTests.swift */; };
+		C9C9F8DF1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9F8DE1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift */; };
+		C9C9F8E11B5F1CBB00EF0FE4 /* TrainTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9F8E01B5F1CBB00EF0FE4 /* TrainTableCell.swift */; };
+		C9C9F8E31B5F1FB400EF0FE4 /* apiKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9C9F8E21B5F1FB400EF0FE4 /* apiKey.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,9 @@
 		C99018A41B547D73008BAB3A /* bartCommuterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bartCommuterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99018A91B547D73008BAB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C99018AA1B547D73008BAB3A /* bartCommuterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bartCommuterTests.swift; sourceTree = "<group>"; };
+		C9C9F8DE1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChosenTrainTableCell.swift; sourceTree = "<group>"; };
+		C9C9F8E01B5F1CBB00EF0FE4 /* TrainTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainTableCell.swift; sourceTree = "<group>"; };
+		C9C9F8E21B5F1FB400EF0FE4 /* apiKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apiKey.plist; sourceTree = "<group>"; };
 		CC67B6D777EFF0EEC853AAB4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		EF8378763AC586312C4B4ADE /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -101,9 +107,12 @@
 		C99018911B547D73008BAB3A /* bartCommuter */ = {
 			isa = PBXGroup;
 			children = (
+				C9C9F8DE1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift */,
 				C99018941B547D73008BAB3A /* AppDelegate.swift */,
 				C99018961B547D73008BAB3A /* ViewController.swift */,
+				C9C9F8E21B5F1FB400EF0FE4 /* apiKey.plist */,
 				C99018981B547D73008BAB3A /* Main.storyboard */,
+				C9C9F8E01B5F1CBB00EF0FE4 /* TrainTableCell.swift */,
 				C990189B1B547D73008BAB3A /* Images.xcassets */,
 				C990189D1B547D73008BAB3A /* LaunchScreen.xib */,
 				C99018921B547D73008BAB3A /* Supporting Files */,
@@ -220,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C990189A1B547D73008BAB3A /* Main.storyboard in Resources */,
+				C9C9F8E31B5F1FB400EF0FE4 /* apiKey.plist in Resources */,
 				C990189F1B547D73008BAB3A /* LaunchScreen.xib in Resources */,
 				C990189C1B547D73008BAB3A /* Images.xcassets in Resources */,
 			);
@@ -288,7 +298,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C99018971B547D73008BAB3A /* ViewController.swift in Sources */,
+				C9C9F8E11B5F1CBB00EF0FE4 /* TrainTableCell.swift in Sources */,
 				C99018951B547D73008BAB3A /* AppDelegate.swift in Sources */,
+				C9C9F8DF1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

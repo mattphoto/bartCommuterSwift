@@ -149,7 +149,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
         let ORIG = "EMBR"
-        let KEY = "Z5LP-U799-IDSQ-DT35"
+        let KEY = getApiKey()
         
         /* 2 - API method arguments */
         let methodArguments = [

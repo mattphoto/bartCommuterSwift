@@ -76,7 +76,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         println(self.hour)
     }
     func getApiKey() -> String {
-    
         let pListPath = NSBundle.mainBundle().pathForResource("apiKey", ofType: "plist")
         let pListKey = NSDictionary(contentsOfFile: pListPath!)
         let KEY = pListKey!["APIKEY"]! as! String
@@ -145,7 +144,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func buildTrainsList(trainDirections: [String]) {
         
-        println(trainDirections)
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
         let ORIG = "EMBR"
@@ -178,58 +176,74 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 
                 var etds = xml["root"]["station"]["etd"]
                 
-                var trainsList : [String] = []
-//                println(xml)
-//                println()
-//                println()
+                struct Train {
+                    var destination: String = ""
+                    var destinationCode: String = ""
+                    var hexColor: String  = ""
+                    var minutes: Int = -1
+                    var length: String = ""
+                }
+                
+                var trainsList : [Train] = []
 
+                println(trainDirections)
                 
                 /* var trainList : [train] */
+                
                 for etd in etds{
-                    var train : [String] = []
+                    var train = Train()
 
-                    println(trainDirections)
                     
                     if let i = find(trainDirections, etd["abbreviation"].element!.text!) {
-
-                    
-                    
-                        train.append(etd["destination"].element!.text!)
-                        train.append(etd["abbreviation"].element!.text!)
-
-    //                    trainDirections
+                        
                         var estimates = etd["estimate"]
                         for estimate in estimates {
-                            
-                            train.append(estimate["length"].element!.text!)
-                            train.append(estimate["hexcolor"].element!.text!)
-                            train.append(estimate["minutes"].element!.text!)
+                            train.destination = etd["destination"].element!.text!
+                            train.destinationCode = etd["abbreviation"].element!.text!
+                            train.length = estimate["length"].element!.text!
+                            train.hexColor = estimate["hexcolor"].element!.text!
+                            train.minutes = (estimate["minutes"].element!.text!).toInt()!
 
-                            
-                            println(train)
+                            trainsList.append(train)
 
-                            
-                            
+//                            println(train.destination)
+//                            println(train.destinationCode)
+//                            println(train.length)
+//                            println(train.hexColor)
+//                            println(train.minutes)
+//
+//                            println(train)
     //                    var estimates = etd["estimate"]["minutes"]
-                        println(estimate["minutes"].element!.text!)
-                        }
-                    }
-                } // for in etd
+                        }  // for estimate in estimates
+                    } // if let i = find(trainDirections
+                } // for  etd in etds
+                
+                trainsList.sort({ $0.minutes < $1.minutes }) // magical!
+
+                for train in trainsList {
+                    println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
+                }
+
+//                  8 - Sort the list of trains
+//                WHY DOESN'T THIS WORK? --------------------------------------
+//                var sortedTrainsList = sorted(trainsList, { (a.minutes : Int, b.minutes : Int ) -> Bool in
+//                    return a.minutes < b.minutes
+//                })
+//                println(sortedTrainsList)
+                
+                
+//                println(trainsList)
+//                println(trainsList[0].minutes)
 
             } // if let api call
         } // session.dataTaskWithRequest
         
-       //  8 - Sort the list of trains
-
-//        var sortedTrainsList = sorted(TrainsList, { (first : Int, second : Int ) -> Bool in
-//                return first < second
-//            })
-//        
         
         
         /* 9 - Resume (execute) the task */
         task.resume()
     }
+    
     
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */
     func escapedParameters(parameters: [String : AnyObject]) -> String {

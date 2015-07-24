@@ -12,7 +12,19 @@ import SWXMLHash
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var trainTableView: UITableView!
+    
     var cellContent = [1, 2, 3, 4]
+    
+    struct Train {
+        var destination: String = ""
+        var destinationCode: String = ""
+        var hexColor: String  = ""
+        var minutes: Int = -1
+        var length: String = ""
+    }
+    
+    var sortedTrainList : [Train] = []
     
     let hour : Int = {
         /* Get current hour */
@@ -22,6 +34,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let hour = components.hour
         return hour
     }()
+    
+    var timer : NSTimer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +56,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         getTrainDirection()
 //        buildTrainsList()
         
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
-
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
         
@@ -57,19 +72,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //
         let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
         cell.backgroundColor = UIColor.yellowColor()
-
         
-        cell.textLabel?.text = "blah"
+        cell.textLabel?.text = sortedTrainList[1].destination
         // heightforrow
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return sortedTrainList.count
     }
 
-    
 
     func loadSettings(){
     
@@ -86,8 +99,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
-        let ORIG = "WOAK"
-        let DEST = "EMBR"
+        let ORIG = "EMBR"
+        let DEST = "WOAK"
         let KEY = getApiKey()
         let DATE = "now"
         let B = 2
@@ -175,14 +188,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 var xml = SWXMLHash.parse(returnedData)
                 
                 var etds = xml["root"]["station"]["etd"]
-                
-                struct Train {
-                    var destination: String = ""
-                    var destinationCode: String = ""
-                    var hexColor: String  = ""
-                    var minutes: Int = -1
-                    var length: String = ""
-                }
+            
                 
                 var trainsList : [Train] = []
 
@@ -193,17 +199,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 for etd in etds{
                     var train = Train()
 
-                    
                     if let i = find(trainDirections, etd["abbreviation"].element!.text!) {
+                        
                         
                         var estimates = etd["estimate"]
                         for estimate in estimates {
+                            
                             train.destination = etd["destination"].element!.text!
                             train.destinationCode = etd["abbreviation"].element!.text!
                             train.length = estimate["length"].element!.text!
                             train.hexColor = estimate["hexcolor"].element!.text!
-                            train.minutes = (estimate["minutes"].element!.text!).toInt()!
-
+                            
+                            var trainMinutes = estimate["minutes"].element!.text!
+                            if trainMinutes != "Leaving" {
+                                train.minutes = (estimate["minutes"].element!.text!).toInt()!
+                            } else {
+                                train.minutes = 0
+                            }
                             trainsList.append(train)
 
 //                            println(train.destination)
@@ -220,20 +232,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 
                 trainsList.sort({ $0.minutes < $1.minutes }) // magical!
 
+                self.sortedTrainList = trainsList
+                self.trainTableView.reloadData()
+                
                 for train in trainsList {
                     println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
                 }
-
-//                  8 - Sort the list of trains
-//                WHY DOESN'T THIS WORK? --------------------------------------
-//                var sortedTrainsList = sorted(trainsList, { (a.minutes : Int, b.minutes : Int ) -> Bool in
-//                    return a.minutes < b.minutes
-//                })
-//                println(sortedTrainsList)
-                
-                
-//                println(trainsList)
-//                println(trainsList[0].minutes)
 
             } // if let api call
         } // session.dataTaskWithRequest

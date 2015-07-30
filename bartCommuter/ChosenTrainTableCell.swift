@@ -12,6 +12,9 @@ class ChosenTrainTableCell: UITableViewCell {
 
     @IBOutlet weak var chosenTrainLabel: UILabel!
     
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

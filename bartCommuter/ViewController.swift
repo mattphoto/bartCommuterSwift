@@ -36,47 +36,56 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }()
     
     var timer : NSTimer!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //            NSUserDefaults.standardUserDefaults().setObject("WOAK", forKey: "homeStation")
-        //            NSUserDefaults.standardUserDefaults().setObject("EMBR", forKey: "workStation")
-        //            NSUserDefaults.standardUserDefaults().setObject(12, forKey: "homeMinutesToStation")
-        //            NSUserDefaults.standardUserDefaults().setObject(11, forKey: "workMinutesToStation")
-        var savedHomeStation = NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as! String
-        var savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as! String
-        var savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as! Int
-        var savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as! Int
-//        println(savedHomeStation)
-//        println(savedWorkStation)
-//        println(savedHomeMinutesToStation)
-//        println(savedWorkMinutesToStation)
         
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let  savedHomeStation = NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as? String,
+                savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as? String,
+                savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as? Int,
+                savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as? Int
+        {
+            getTrainDirection()
+        } else {
+            // No data
+            println("no data")
+            
+            performSegueWithIdentifier("settingsSegue", sender: nil)
+        }
+        
+
 //        loadSettings()
-        getTrainDirection()
 //        buildTrainsList()
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
         
-        // if row is odd, then cellDisplay = train
-        // if row is even then cellDisplay = chosenTrain
-        
+        if sortedTrainList[indexPath.row].minutes % 2 == 0 {
+            let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
+            cell.backgroundColor = UIColor.grayColor()
+            
+            cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
+            // heightforrow
+            
+            return cell
+        } else {
+            let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
+            cell.backgroundColor = UIColor.lightGrayColor()
+            
+            cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
+            // heightforrow
+            
+            return cell
+
+        }
         
 //        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! ChosenTrainTableCell
-//        cell.backgroundColor = UIColor.yellowColor()
+//        cell.backgroundColor = UIColor.g
 //        
 //
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
-        cell.backgroundColor = UIColor.yellowColor()
-        
-        cell.textLabel?.text = sortedTrainList[1].destination
-        // heightforrow
-        
-        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,7 +104,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return KEY
     }
     
+    // MARK: - Get Train Direction
+    
     func getTrainDirection() {
+        
+        var savedHomeStation = NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as! String? ?? "WOAK"
+        var savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as! String? ?? "EMBR"
+        var savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as! Int? ?? 5
+        var savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as! Int? ?? 5
+        var savedMidday = 13
+        
+        println(savedWorkStation)
+        println(savedHomeStation)
+        println(savedHomeMinutesToStation)
+        println(savedWorkMinutesToStation)
+        println(savedMidday)
+
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
@@ -125,28 +149,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         /* 4 - Initialize task for getting data */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
-            if let error = downloadError {
-                println("Could not complete the request \(error)")
-            } else {
-                /* 5 - Success! Parse the data */
-                var parsingError: NSError? = nil
-                
-                var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
-                
-                var xml = SWXMLHash.parse(returnedData)
+            NSOperationQueue.mainQueue().addOperationWithBlock({
+                if let error = downloadError {
+                    println("Could not complete the request \(error)")
+                } else {
+                    /* 5 - Success! Parse the data */
+                    var parsingError: NSError? = nil
+                    
+                    var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                    
+                    var xml = SWXMLHash.parse(returnedData)
 
-                var trainDirections : [String] = []
+                    var trainDirections : [String] = []
 
-                for elem in xml["root"]["schedule"]["request"] {
-                    var trips = elem["trip"]
-                    for trip in trips {
-                        var trainHead = trip["leg"].element!.attributes["trainHeadStation"]!
-                            trainDirections.append(trainHead)
+                    for elem in xml["root"]["schedule"]["request"] {
+                        var trips = elem["trip"]
+                        for trip in trips {
+                            var trainHead = trip["leg"].element!.attributes["trainHeadStation"]!
+                                trainDirections.append(trainHead)
+                        }
                     }
-                }
 
-                self.buildTrainsList(trainDirections)
-            }
+                    self.buildTrainsList(trainDirections)
+                }
+            })
             
         }
         
@@ -154,6 +180,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         task.resume()
     }
     
+    // MARK: - Build Trains List
     
     func buildTrainsList(trainDirections: [String]) {
         
@@ -177,69 +204,63 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         /* 4 - Initialize task for getting data */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
-            if let error = downloadError {
-                println("Could not complete the request \(error)")
-            } else {
-                /* 5 - Success! Parse the data */
-                var parsingError: NSError? = nil
-                
-                var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
-                
-                var xml = SWXMLHash.parse(returnedData)
-                
-                var etds = xml["root"]["station"]["etd"]
-            
-                
-                var trainsList : [Train] = []
+            NSOperationQueue.mainQueue().addOperationWithBlock({
 
-                println(trainDirections)
+                if let error = downloadError {
+                    println("Could not complete the request \(error)")
+                } else {
+                    /* 5 - Success! Parse the data */
+                    var parsingError: NSError? = nil
+                    
+                    var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                    
+                    var xml = SWXMLHash.parse(returnedData)
+                    
+                    var etds = xml["root"]["station"]["etd"]
                 
-                /* var trainList : [train] */
-                
-                for etd in etds{
-                    var train = Train()
+                    
+                    var trainsList : [Train] = []
 
-                    if let i = find(trainDirections, etd["abbreviation"].element!.text!) {
-                        
-                        
-                        var estimates = etd["estimate"]
-                        for estimate in estimates {
+                    println(trainDirections)
+                    
+                    for etd in etds{
+                        var train = Train()
+
+                        if let i = find(trainDirections, etd["abbreviation"].element!.text!) {
                             
-                            train.destination = etd["destination"].element!.text!
-                            train.destinationCode = etd["abbreviation"].element!.text!
-                            train.length = estimate["length"].element!.text!
-                            train.hexColor = estimate["hexcolor"].element!.text!
-                            
-                            var trainMinutes = estimate["minutes"].element!.text!
-                            if trainMinutes != "Leaving" {
-                                train.minutes = (estimate["minutes"].element!.text!).toInt()!
-                            } else {
-                                train.minutes = 0
-                            }
-                            trainsList.append(train)
+                            var estimates = etd["estimate"]
+                            for estimate in estimates {
+                                
+                                train.destination = etd["destination"].element!.text!
+                                train.destinationCode = etd["abbreviation"].element!.text!
+                                train.length = estimate["length"].element!.text!
+                                train.hexColor = estimate["hexcolor"].element!.text!
+                                
+                                var trainMinutes = estimate["minutes"].element!.text!
+                                if trainMinutes != "Leaving" {
+                                    train.minutes = (estimate["minutes"].element!.text!).toInt()!
+                                } else {
+                                    train.minutes = 0
+                                }
+                                trainsList.append(train)
 
-//                            println(train.destination)
-//                            println(train.destinationCode)
-//                            println(train.length)
-//                            println(train.hexColor)
-//                            println(train.minutes)
-//
-//                            println(train)
-    //                    var estimates = etd["estimate"]["minutes"]
-                        }  // for estimate in estimates
-                    } // if let i = find(trainDirections
-                } // for  etd in etds
-                
-                trainsList.sort({ $0.minutes < $1.minutes }) // magical!
+                            }  // for estimate in estimates
+                        } // if let i = find(trainDirections
+                    } // for  etd in etds
+                    
+                    trainsList.sort({ $0.minutes < $1.minutes }) // magical!
 
-                self.sortedTrainList = trainsList
-                self.trainTableView.reloadData()
-                
-                for train in trainsList {
-                    println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
-                }
+                    self.sortedTrainList = trainsList
+                    self.trainTableView.reloadData()
+                    
+                    for train in trainsList {
+                        println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
+                    }
+                    
 
-            } // if let api call
+                } // if let api call
+            })
+
         } // session.dataTaskWithRequest
         
         

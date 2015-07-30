@@ -9,5 +9,13 @@
 import UIKit
 
 class BartSettings: NSObject {
-   
+   static let sharedSettings = BartSettings()
+    
+    var homeStation : String {
+        get {
+            return NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as! String
+        }
+    }
 }
+
+//        var savedHomeStation = BartSettings.sharedSettings.homeStation

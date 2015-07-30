@@ -10,6 +10,14 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var homeStation: UITextField!
+    
+    @IBOutlet weak var workStation: UITextField!
+    
+    @IBOutlet weak var timeToHomeStation: UITextField!
+    
+    @IBOutlet weak var timeToWorkStation: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +29,16 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func didTapDoneButton(sender: UIButton) {
+        println("done button tapped!")
+        
+        NSUserDefaults.standardUserDefaults().setObject(homeStation.text, forKey: "homeStation")
+        NSUserDefaults.standardUserDefaults().setObject(workStation.text, forKey: "workStation")
+        NSUserDefaults.standardUserDefaults().setObject(timeToHomeStation.text.toInt(), forKey: "homeMinutesToStation")
+        NSUserDefaults.standardUserDefaults().setObject(timeToWorkStation.text.toInt(), forKey: "workMinutesToStation")
 
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

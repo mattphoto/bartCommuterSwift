@@ -53,7 +53,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
         
-
 //        loadSettings()
 //        buildTrainsList()
         
@@ -63,20 +62,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
         
-        if sortedTrainList[indexPath.row].minutes % 2 == 0 {
+        if indexPath.row != 3 {
             let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
             cell.backgroundColor = UIColor.grayColor()
             
             cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
-            // heightforrow
-            
             return cell
         } else {
-            let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
+            let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
             cell.backgroundColor = UIColor.lightGrayColor()
             
-            cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
+            cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
             // heightforrow
+            
+
             
             return cell
 
@@ -92,6 +91,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return sortedTrainList.count
     }
 
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+        if indexPath.row != 3 {
+           
+            return 44
+        } else {
+            return 400
+            
+        }
+    
+    
+    
+    
+    }
 
     func loadSettings(){
     
@@ -113,11 +126,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as! Int? ?? 5
         var savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as! Int? ?? 5
         var savedMidday = 13
-        
-        println(savedWorkStation)
-        println(savedHomeStation)
-        println(savedHomeMinutesToStation)
-        println(savedWorkMinutesToStation)
+
+        print("START getTrainDirection: ")
+        print(savedWorkStation)
+        print(savedHomeStation)
+        print(savedHomeMinutesToStation)
+        print(savedWorkMinutesToStation)
         println(savedMidday)
 
         
@@ -186,7 +200,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
-        let ORIG = "EMBR"
+        let ORIG = "12TH"
         let KEY = getApiKey()
         
         /* 2 - API method arguments */
@@ -259,11 +273,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
 
                 } // if let api call
-            })
+            }) //NSOperationQueue.mainQueue
 
         } // session.dataTaskWithRequest
-        
-        
         
         /* 9 - Resume (execute) the task */
         task.resume()

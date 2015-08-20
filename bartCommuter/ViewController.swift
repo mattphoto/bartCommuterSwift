@@ -36,7 +36,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }()
     
     var timer : NSTimer!
-        
+    
+    // main running loop
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -47,69 +48,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         {
             getTrainDirection()
         } else {
-            // No data
             println("no data")
-            
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
-        
-//        loadSettings()
-//        buildTrainsList()
-        
+
         self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
     
+    // Select TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
         
         if indexPath.row != 3 {
             let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
             cell.backgroundColor = UIColor.grayColor()
-            
             cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
             cell.backgroundColor = UIColor.lightGrayColor()
-            
             cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
-            // heightforrow
-            
-
-            
             return cell
-
         }
-        
-//        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! ChosenTrainTableCell
-//        cell.backgroundColor = UIColor.g
-//        
-//
     }
-    
+
+    // Determine number of cells to display
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedTrainList.count
     }
 
+    //
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
-        if indexPath.row != 3 {
-           
+        if indexPath.row != 4 {
             return 44
         } else {
             return 400
-            
         }
-    
-    
-    
-    
     }
 
     func loadSettings(){
-    
         println(self.hour)
     }
+    
+    // get API key from plist that's .gitignored
     func getApiKey() -> String {
         let pListPath = NSBundle.mainBundle().pathForResource("apiKey", ofType: "plist")
         let pListKey = NSDictionary(contentsOfFile: pListPath!)
@@ -127,18 +108,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as! Int? ?? 5
         var savedMidday = 13
 
+        // switch directions based on time of the day
+        // originStation
+        
         print("START getTrainDirection: ")
         print(savedWorkStation)
         print(savedHomeStation)
         print(savedHomeMinutesToStation)
         print(savedWorkMinutesToStation)
         println(savedMidday)
-
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
-        let ORIG = "EMBR"
-        let DEST = "WOAK"
+        let ORIG = "WOAK"
+        let DEST = "EMBR"
         let KEY = getApiKey()
         let DATE = "now"
         let B = 2
@@ -200,7 +183,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
-        let ORIG = "12TH"
+        let ORIG = "WOAK"
         let KEY = getApiKey()
         
         /* 2 - API method arguments */

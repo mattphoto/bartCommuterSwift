@@ -271,6 +271,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
                     }
                     
+                    // pop up if trainsList returns empty array
+                    if trainsList.count == 0 {
+                        self.showAlertForNoTrains()
+                    }
+                    
 
                 } // if let api call
             }) //NSOperationQueue.mainQueue
@@ -282,6 +287,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
+    func showAlertForNoTrains() {
+        let alertController = UIAlertController(title: "No Trains", message: "I think the BART trains are asleep now", preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "Got It!", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */
     func escapedParameters(parameters: [String : AnyObject]) -> String {
         

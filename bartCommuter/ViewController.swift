@@ -46,15 +46,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as? Int,
                 savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as? Int
         {
-            performSegueWithIdentifier("settingsSegue", sender: nil)
-
             getTrainDirection()
         } else {
             println("no data")
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
 
-//        self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
     
     // Select TableView
@@ -123,7 +121,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
         let ORIG = "WOAK"
-        let DEST = "EMBR"
+        let DEST = "embr"
         let KEY = getApiKey()
         let DATE = "now"
         let B = 2
@@ -185,7 +183,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
-        let ORIG = "WOAK"
+        let ORIG = "woak"
         let KEY = getApiKey()
         
         /* 2 - API method arguments */

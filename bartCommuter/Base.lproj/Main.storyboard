@@ -106,7 +106,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vs6-oG-wVF">
-                                <rect key="frame" x="189" y="652" width="37" height="30"/>
+                                <rect key="frame" x="189" y="590" width="37" height="30"/>
                                 <state key="normal" title="Done">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -115,15 +115,9 @@
                                 </connections>
                             </button>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="r9l-X5-OaL">
-                                <rect key="frame" x="255" y="567" width="94" height="29"/>
+                                <rect key="frame" x="250" y="516" width="94" height="29"/>
                                 <connections>
                                     <action selector="workStepperValueChanged:" destination="CBm-kS-Tpc" eventType="valueChanged" id="dnh-rs-0N0"/>
-                                </connections>
-                            </stepper>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="F6S-dZ-f6K">
-                                <rect key="frame" x="55" y="567" width="94" height="29"/>
-                                <connections>
-                                    <action selector="homeStepperValueChanged:" destination="CBm-kS-Tpc" eventType="valueChanged" id="OfA-2g-XKg"/>
                                 </connections>
                             </stepper>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="310-2b-1zy">
@@ -163,6 +157,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="F6S-dZ-f6K">
+                                <rect key="frame" x="60" y="521" width="94" height="29"/>
+                                <connections>
+                                    <action selector="homeStepperValueChanged:" destination="CBm-kS-Tpc" eventType="valueChanged" id="OfA-2g-XKg"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

@@ -107,6 +107,8 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     ]
     
     var stationSegmentedSelection = "home"
+    var homeStation = ""
+    var workStation = ""
     @IBOutlet weak var trainPicker: UIPickerView!
     @IBOutlet weak var homeStationLabel: UILabel!
     @IBOutlet weak var workStationLabel: UILabel!
@@ -148,13 +150,12 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     func pickerView(trainPicker: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        println(stationCode[row])
-        
         if stationSegmentedSelection == "home" {
             homeStationLabel.text = pickerDataSource[row]
-            
+            homeStation = stationCode[row]
         } else if stationSegmentedSelection == "work" {
             workStationLabel.text = pickerDataSource[row]
+            workStation = stationCode[row]
         }
     }
 
@@ -165,7 +166,6 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
             stationSegmentedSelection = "home"
         case 1:
             stationSegmentedSelection = "work"
-            println("work Segment selected")
         default:
             break; 
         }
@@ -182,8 +182,8 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     @IBAction func didTapDoneButton(sender: UIButton) {
         println("done button tapped!")
         
-        NSUserDefaults.standardUserDefaults().setObject(homeStationLabel.text, forKey: "homeStation")
-        NSUserDefaults.standardUserDefaults().setObject(workStationLabel.text, forKey: "workStation")
+        NSUserDefaults.standardUserDefaults().setObject(homeStation, forKey: "homeStation")
+        NSUserDefaults.standardUserDefaults().setObject(workStation, forKey: "workStation")
         NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
         NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
         

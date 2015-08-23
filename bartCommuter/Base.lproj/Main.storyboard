@@ -116,9 +116,15 @@
                             </button>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="r9l-X5-OaL">
                                 <rect key="frame" x="255" y="567" width="94" height="29"/>
+                                <connections>
+                                    <action selector="workStepperValueChanged:" destination="CBm-kS-Tpc" eventType="valueChanged" id="dnh-rs-0N0"/>
+                                </connections>
                             </stepper>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="F6S-dZ-f6K">
                                 <rect key="frame" x="55" y="567" width="94" height="29"/>
+                                <connections>
+                                    <action selector="homeStepperValueChanged:" destination="CBm-kS-Tpc" eventType="valueChanged" id="OfA-2g-XKg"/>
+                                </connections>
                             </stepper>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="310-2b-1zy">
                                 <rect key="frame" x="16" y="70" width="382" height="29"/>
@@ -126,18 +132,33 @@
                                     <segment title="Home Station"/>
                                     <segment title="Work Station"/>
                                 </segments>
+                                <connections>
+                                    <action selector="homeOrWorkStation:" destination="CBm-kS-Tpc" eventType="valueChanged" id="hpV-KW-ffv"/>
+                                </connections>
                             </segmentedControl>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZOj-b8-B3g">
                                 <rect key="frame" x="0.0" y="256" width="414" height="162"/>
                             </pickerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="choose station" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3M-9Q-RIO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="- - -" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3M-9Q-RIO">
                                 <rect key="frame" x="32" y="134" width="151" height="59"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="choose station" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccr-si-gkM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="- - -" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccr-si-gkM">
                                 <rect key="frame" x="222" y="134" width="151" height="59"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Zh-D4-Nyl">
+                                <rect key="frame" x="86" y="487" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVS-3F-07c">
+                                <rect key="frame" x="276" y="487" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -148,9 +169,13 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="homeStationLabel" destination="h3M-9Q-RIO" id="lr8-DY-sCX"/>
+                        <outlet property="homeTimeLabel" destination="7Zh-D4-Nyl" id="It1-GB-xAX"/>
+                        <outlet property="homeTimeStepper" destination="F6S-dZ-f6K" id="Q2w-zx-WAf"/>
                         <outlet property="stationSegmentedControl" destination="310-2b-1zy" id="Way-xq-jAh"/>
                         <outlet property="trainPicker" destination="ZOj-b8-B3g" id="9yw-tK-57G"/>
                         <outlet property="workStationLabel" destination="Ccr-si-gkM" id="PNQ-VZ-Zxv"/>
+                        <outlet property="workTimeLabel" destination="HVS-3F-07c" id="GHE-DL-o0J"/>
+                        <outlet property="workTimeStepper" destination="r9l-X5-OaL" id="zuo-ci-Lbd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Je-cC-j2z" userLabel="First Responder" sceneMemberID="firstResponder"/>

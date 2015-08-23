@@ -106,15 +106,25 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         "woak"
     ]
     
+    var stationSegmentedSelection = "home"
     @IBOutlet weak var trainPicker: UIPickerView!
     @IBOutlet weak var homeStationLabel: UILabel!
     @IBOutlet weak var workStationLabel: UILabel!
+    @IBOutlet weak var homeTimeLabel: UILabel!
+    @IBOutlet weak var workTimeLabel: UILabel!
     @IBOutlet weak var stationSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var homeTimeStepper: UIStepper!
+    @IBOutlet weak var workTimeStepper: UIStepper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.trainPicker.dataSource = self;
         self.trainPicker.delegate = self;
+
+        homeTimeStepper.maximumValue = 59
+        workTimeStepper.maximumValue = 59
+        homeTimeStepper.value = 5
+        workTimeStepper.value = 5
 
         // Do any additional setup after loading the view.
     }
@@ -140,37 +150,43 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     {
         println(stationCode[row])
         
-        homeStationLabel.text = pickerDataSource[row]
-        
-        if(row == 0)
-        {
-            self.view.backgroundColor = UIColor.whiteColor();
-        }
-        else if(row == 1)
-        {
-            self.view.backgroundColor = UIColor.redColor();
-        }
-        else if(row == 2)
-        {
-            self.view.backgroundColor =  UIColor.greenColor();
-        }
-        else
-        {
-            self.view.backgroundColor = UIColor.whiteColor();
+        if stationSegmentedSelection == "home" {
+            homeStationLabel.text = pickerDataSource[row]
+            
+        } else if stationSegmentedSelection == "work" {
+            workStationLabel.text = pickerDataSource[row]
         }
     }
 
+    @IBAction func homeOrWorkStation(sender: UISegmentedControl) {
+        switch stationSegmentedControl.selectedSegmentIndex
+        {
+        case 0:
+            stationSegmentedSelection = "home"
+        case 1:
+            stationSegmentedSelection = "work"
+            println("work Segment selected")
+        default:
+            break; 
+        }
+    }
+    
+    @IBAction func homeStepperValueChanged(sender: UIStepper) {
+        homeTimeLabel.text = Int(sender.value).description
+    }
+    
+    @IBAction func workStepperValueChanged(sender: UIStepper) {
+        workTimeLabel.text = Int(sender.value).description
+    }
+    
     @IBAction func didTapDoneButton(sender: UIButton) {
         println("done button tapped!")
         
-//        NSUserDefaults.standardUserDefaults().setObject(homeStation.text, forKey: "homeStation")
-//        NSUserDefaults.standardUserDefaults().setObject(workStation.text, forKey: "workStation")
-//        NSUserDefaults.standardUserDefaults().setObject(timeToHomeStation.text.toInt(), forKey: "homeMinutesToStation")
-//        NSUserDefaults.standardUserDefaults().setObject(timeToWorkStation.text.toInt(), forKey: "workMinutesToStation")
-
+        NSUserDefaults.standardUserDefaults().setObject(homeStationLabel.text, forKey: "homeStation")
+        NSUserDefaults.standardUserDefaults().setObject(workStationLabel.text, forKey: "workStation")
+        NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
+        NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-
-
 }

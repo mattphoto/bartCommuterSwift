@@ -46,13 +46,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as? Int,
                 savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as? Int
         {
+            performSegueWithIdentifier("settingsSegue", sender: nil)
+
             getTrainDirection()
         } else {
             println("no data")
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
 
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
+//        self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
     
     // Select TableView

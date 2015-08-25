@@ -44,47 +44,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as? Int,
                 savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as? Int
         {
-            // if all 4 user defaults exist...
-            
+        // if all 4 user defaults exist...
             // determine origin and destination based on hourToReverseDirection
             let hourToReverseDirection = NSUserDefaults.standardUserDefaults().objectForKey("hourToReverseDirection") as! Int? ?? 13
 
-            
-            
-            
-            
-            
-            
-            
-            
-            //        println(self.hour)
-
-            
-            
-            
-            println(savedHomeStation)
-            
-
+            // it's commute to work if it's less than midday && later than 3am
+            if (self.hour < hourToReverseDirection) && (self.hour > 3) {
+                NSUserDefaults.standardUserDefaults().setObject(savedHomeStation, forKey: "origin")
+                NSUserDefaults.standardUserDefaults().setObject(savedWorkStation, forKey: "destination")
+                NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToOrigin")
+                NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToDestination")
+            } else {
+            // it's commute to home
+                NSUserDefaults.standardUserDefaults().setObject(savedHomeStation, forKey: "destination")
+                NSUserDefaults.standardUserDefaults().setObject(savedWorkStation, forKey: "origin")
+                NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToDestination")
+                NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToOrigin")
+            }
             getServiceAdvisory()
             getTrainDirection()
 
         } else {
-            // present user with a settings modal
+        // present user with a settings modal
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
 
         self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
-    
-    
-    @IBAction func toggleDirection(sender: AnyObject) {
-        
-        
-        
-        
-        getTrainDirection()
-    }
-    
     
     // Select TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -128,27 +114,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Get Train Direction
     
     func getTrainDirection() {
-        
-        var savedHomeStation = NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as! String? ?? "WOAK"
-        var savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as! String? ?? "EMBR"
-        var savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as! Int? ?? 5
-        var savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as! Int? ?? 5
-        var hourToReverseDirection = 13
 
-        // switch directions based on time of the day
-        // originStation
+        let origin = NSUserDefaults.standardUserDefaults().objectForKey("origin") as! String? ?? "WOAK"
+        let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String? ?? "EMBR"
+        let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 5
+        let minutesToDestination = NSUserDefaults.standardUserDefaults().objectForKey("minutesToDestination") as! Int? ?? 5
         
         print("START getTrainDirection: ")
-        print(savedWorkStation)
-        print(savedHomeStation)
-        print(savedHomeMinutesToStation)
-        print(savedWorkMinutesToStation)
-        println(hourToReverseDirection)
+        print(origin)
+        print(destination)
+        print(minutesToOrigin)
+        print(minutesToDestination)
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
-        let ORIG = "WOAK"
-        let DEST = "embr"
+        let ORIG = origin
+        let DEST = destination
         let KEY = getApiKey()
         let DATE = "now"
         let B = 2
@@ -193,8 +174,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                                 trainDirections.append(trainHead)
                         }
                     }
-
-                    self.buildTrainsList(trainDirections)
+                    self.buildTrainsList(trainDirections, origin: origin)
                 }
             })
             
@@ -206,11 +186,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // MARK: - Build Trains List
     
-    func buildTrainsList(trainDirections: [String]) {
+    func buildTrainsList(trainDirections: [String], origin: String) {
         
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
-        let ORIG = "woak"
+        let ORIG = origin
         let KEY = getApiKey()
         
         /* 2 - API method arguments */

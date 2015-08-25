@@ -75,11 +75,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Select TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
-        
+        let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
+    
         if indexPath.row != 3 {
             let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
-            cell.backgroundColor = UIColor.grayColor()
+            cell.backgroundColor = UIColorFromHex(etdIndicatorColors[indexPath.row])
             cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
+            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
@@ -89,15 +91,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
 
-    // Determine number of cells to display
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedTrainList.count
     }
 
-    //
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row != 4 {
-            return 44
+            return 36
         } else {
             return 400
         }
@@ -177,7 +177,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     self.buildTrainsList(trainDirections, origin: origin)
                 }
             })
-            
         }
         
         /* 9 - Resume (execute) the task */
@@ -261,7 +260,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
                     }
                     
-                    // pop up if trainsList returns empty array
+                    // show alert if trainsList returns empty array
                     if trainsList.count == 0 {
                         self.showAlertForNoTrains()
                     }
@@ -350,7 +349,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         task.resume()
     }
 
-    
     func showAlertForNoTrains() {
         let alertController = UIAlertController(title: "No Trains", message: "I think the BART trains are asleep now", preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "Got It!", style: .Default, handler: nil)
@@ -358,24 +356,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.presentViewController(alertController, animated: true, completion: nil)
     }
 
+    /* Helper function: convert hex to UIColor */
+    func UIColorFromHex(rgbValue : UInt32, alpha : Double = 1.0) -> UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */
     func escapedParameters(parameters: [String : AnyObject]) -> String {
-        
         var urlVars = [String]()
-        
         for (key, value) in parameters {
-            
             /* Make sure that it is a string value */
             let stringValue = "\(value)"
-            
             /* Escape it */
             let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            
             /* Append it */
             urlVars += [key + "=" + "\(escapedValue!)"]
-            
         }
-        
         return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
     }
 }

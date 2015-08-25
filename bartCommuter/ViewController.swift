@@ -14,8 +14,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var trainTableView: UITableView!
     
-    var cellContent = [1, 2, 3, 4]
-    
     struct Train {
         var destination: String = ""
         var destinationCode: String = ""
@@ -46,14 +44,47 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as? Int,
                 savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as? Int
         {
+            // if all 4 user defaults exist...
+            
+            // determine origin and destination based on hourToReverseDirection
+            let hourToReverseDirection = NSUserDefaults.standardUserDefaults().objectForKey("hourToReverseDirection") as! Int? ?? 13
+
+            
+            
+            
+            
+            
+            
+            
+            
+            //        println(self.hour)
+
+            
+            
+            
+            println(savedHomeStation)
+            
+
+            getServiceAdvisory()
             getTrainDirection()
+
         } else {
-            println("no data")
+            // present user with a settings modal
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
 
         self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
+    
+    
+    @IBAction func toggleDirection(sender: AnyObject) {
+        
+        
+        
+        
+        getTrainDirection()
+    }
+    
     
     // Select TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -85,10 +116,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return 400
         }
     }
-
-    func loadSettings(){
-        println(self.hour)
-    }
     
     // get API key from plist that's .gitignored
     func getApiKey() -> String {
@@ -106,7 +133,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as! String? ?? "EMBR"
         var savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as! Int? ?? 5
         var savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as! Int? ?? 5
-        var savedMidday = 13
+        var hourToReverseDirection = 13
 
         // switch directions based on time of the day
         // originStation
@@ -116,7 +143,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print(savedHomeStation)
         print(savedHomeMinutesToStation)
         print(savedWorkMinutesToStation)
-        println(savedMidday)
+        println(hourToReverseDirection)
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
@@ -269,6 +296,80 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         task.resume()
     }
     
+    func getServiceAdvisory() {
+        
+        let BASE_URL = "http://api.bart.gov/api/bsa.aspx"
+        let KEY = getApiKey()
+        
+        /* 2 - API method arguments */
+        let methodArguments = [
+            "cmd": "bsa",
+            "date": "today",
+
+            "key": KEY
+        ]
+        
+        /* 3 - Initialize session and url */
+        let session = NSURLSession.sharedSession()
+        let urlString = BASE_URL + escapedParameters(methodArguments)
+        let url = NSURL(string: urlString)!
+        let request = NSURLRequest(URL: url)
+        
+        /* 4 - Initialize task for getting data */
+        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+            NSOperationQueue.mainQueue().addOperationWithBlock({
+                
+                if let error = downloadError {
+                    println("Could not complete the request \(error)")
+                } else {
+                    /* 5 - Success! Parse the data */
+                    var parsingError: NSError? = nil
+                    
+                    var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                    
+                    var xml = SWXMLHash.parse(returnedData)
+//                    println(xml["root"]["time"])
+                    //                    <time>16:53:00 PM PDT</time>
+//                    println(xml["root"]["bsa"]["description"])
+//                    <description>There is a major delay system wide due to a earlier medical emergency at Embarcadero Station.    Embarcadero Station is expected to be re-opened by 5pm.  </description>
+//                    println(xml["root"]["bsa"]["posted"])
+//                    <posted>Mon Aug 24 2015 04:35 PM PDT</posted>
+//                    println(xml["root"]["bsa"]["expires"])
+//                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
+
+                    let bsaDescription = String(stringInterpolationSegment: xml["root"]["bsa"]["description"])
+                    let bsaTime = String(stringInterpolationSegment: xml["root"]["bsa"]["posted"])
+                    let bsaMessage = bsaTime + bsaDescription
+                    let alertController = UIAlertController(title: "bsa", message: bsaMessage, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: "oh drat!", style: .Default, handler: nil)
+                    alertController.addAction(defaultAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    
+//                    <root>
+//                    <uri>http://api.bart.gov/api/bsa.aspx?cmd=bsa&date=today</uri>
+//                    <date>08/24/2015</date>
+//                    <time>16:43:00 PM PDT</time>
+//                    <bsa id="135286">
+//                    <station>BART</station>
+//                    <type>DELAY</type>
+//                    <description>There is a major delay system wide due to a earlier medical emergency at Embarcadero Station.    Embarcadero Station is expected to be re-opened by 5pm.  </description>
+//                    <sms_text>Major delay system wide due to a earlier medical emergency at EMBR stn.    EMBR stn is expected to be re-opened by 5pm.</sms_text>
+//                    <posted>Mon Aug 24 2015 04:35 PM PDT</posted>
+//                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
+//                    </bsa>
+//                    <message/>
+//                    </root>
+
+                    
+                } // if let api call
+            }) //NSOperationQueue.mainQueue
+            
+        } // session.dataTaskWithRequest
+        
+        /* 9 - Resume (execute) the task */
+        task.resume()
+    }
+
     
     func showAlertForNoTrains() {
         let alertController = UIAlertController(title: "No Trains", message: "I think the BART trains are asleep now", preferredStyle: .Alert)

@@ -11,7 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var pickerDataSource : [String] = [
-        "choose a station",
+        "please select station",
         "12th St. Oakland City Center",
         "16th St. Mission",
         "19th St. Oakland",
@@ -128,12 +128,11 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         homeTimeStepper.value = 5
         workTimeStepper.value = 5
 
-        // Do any additional setup after loading the view.
+        homeStationLabel.text = "12th St. Oakland City Center"
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func numberOfComponentsInPickerView(trainPicker: UIPickerView) -> Int {
@@ -186,7 +185,18 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         NSUserDefaults.standardUserDefaults().setObject(workStation, forKey: "workStation")
         NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
         NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
-        
+        NSUserDefaults.standardUserDefaults().setObject(13, forKey: "hourToReverseDirection")
+
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//
+//        let hometuple = (homeStation, "a")
+//
+//        let array = ["Hello", "World", 3]
+//        defaults.setObject(array, forKey: "SavedArray")
+//
+//        NSUserDefaults.standardUserDefaults().setObject(array, forKey: "originStation")
+//        NSUserDefaults.standardUserDefaults().setObject(workStation, workTimeLabel.text!.toInt()), forKey: "destinationStation")
+
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

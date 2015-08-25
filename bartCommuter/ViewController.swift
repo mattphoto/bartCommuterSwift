@@ -80,8 +80,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if indexPath.row != 3 {
             let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
             cell.backgroundColor = UIColorFromHex(etdIndicatorColors[indexPath.row])
+            cell.backgroundColor = UIColor.grayColor()
+
             cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
-            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
+//            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
@@ -96,7 +98,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row != 4 {
+        if indexPath.row != 3 {
             return 36
         } else {
             return 400

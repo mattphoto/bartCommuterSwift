@@ -9,7 +9,6 @@
 import UIKit
 
 class ChosenTrainTableCell: UITableViewCell {
-
     
     @IBOutlet weak var chosenTrainLabel: UILabel!
     

@@ -61,7 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToDestination")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToOrigin")
             }
-            getServiceAdvisory()
+//            getServiceAdvisory()
             getTrainDirection()
 
         } else {
@@ -80,7 +80,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if indexPath.row != 3 {
             let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
             cell.backgroundColor = UIColorFromHex(etdIndicatorColors[indexPath.row])
-            cell.backgroundColor = UIColor.grayColor()
+            cell.backgroundColor = UIColor.lightGrayColor()
 
             cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
 //            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
@@ -166,14 +166,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
                     
                     var xml = SWXMLHash.parse(returnedData)
-
                     var trainDirections : [String] = []
 
                     for elem in xml["root"]["schedule"]["request"] {
                         var trips = elem["trip"]
+                        
                         for trip in trips {
-                            var trainHead = trip["leg"].element!.attributes["trainHeadStation"]!
+
+                            
+                            var trainHead = trip["leg"][0].element!.attributes["trainHeadStation"]!
                                 trainDirections.append(trainHead)
+                                
                         }
                     }
                     self.buildTrainsList(trainDirections, origin: origin)

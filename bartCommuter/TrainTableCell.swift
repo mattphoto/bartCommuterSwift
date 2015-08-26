@@ -12,7 +12,6 @@ class TrainTableCell: UITableViewCell {
 
     @IBOutlet weak var trainLabel: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

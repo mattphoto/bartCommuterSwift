@@ -123,12 +123,24 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         self.trainPicker.dataSource = self;
         self.trainPicker.delegate = self;
 
-        homeTimeStepper.maximumValue = 59
-        workTimeStepper.maximumValue = 59
         homeTimeStepper.value = 5
         workTimeStepper.value = 5
 
-        homeStationLabel.text = "12th St. Oakland City Center"
+        if let
+            savedHomeStation = NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as? String,
+            savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as? String,
+            savedHomeMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("homeMinutesToStation") as? Int,
+            savedWorkMinutesToStation = NSUserDefaults.standardUserDefaults().objectForKey("workMinutesToStation") as? Int
+        {
+            homeStation = savedHomeStation
+            workStation = savedWorkStation
+            homeTimeStepper.value = Double(savedHomeMinutesToStation)
+            workTimeStepper.value = Double(savedWorkMinutesToStation)
+
+        }
+        homeTimeStepper.maximumValue = 59
+        workTimeStepper.maximumValue = 59
+
     }
 
     override func didReceiveMemoryWarning() {

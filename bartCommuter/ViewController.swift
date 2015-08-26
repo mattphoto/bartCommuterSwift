@@ -321,9 +321,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     let bsaDescription = String(stringInterpolationSegment: xml["root"]["bsa"]["description"])
                     let bsaTime = String(stringInterpolationSegment: xml["root"]["bsa"]["posted"])
                     let bsaMessage = bsaTime + bsaDescription
-                    let alertController = UIAlertController(title: "bsa", message: bsaMessage, preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: "oh drat!", style: .Default, handler: nil)
+                    let alertController = UIAlertController(title: "BART Service Advisory", message: bsaMessage, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: "ok", style: .Default, handler: nil)
                     alertController.addAction(defaultAction)
+                    
+                    println(bsaDescription)
+                    
+                    // if advisory includes default text, don't pop an alert.
+                    let noDelays = "No delays reported"
+                    if noDelays.rangeOfString(bsaDescription) != nil{
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                    
                     self.presentViewController(alertController, animated: true, completion: nil)
                     
 //                    <root>

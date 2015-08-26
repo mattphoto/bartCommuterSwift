@@ -19,6 +19,7 @@
 		C9C9F8E11B5F1CBB00EF0FE4 /* TrainTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9F8E01B5F1CBB00EF0FE4 /* TrainTableCell.swift */; };
 		C9C9F8E31B5F1FB400EF0FE4 /* apiKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9C9F8E21B5F1FB400EF0FE4 /* apiKey.plist */; };
 		C9C9F8E41B630DA200EF0FE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99018961B547D73008BAB3A /* ViewController.swift */; };
+		C9DF14081B8E76C600B7F56B /* UIColor+useHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DF14071B8E76C600B7F56B /* UIColor+useHex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		C9C9F8DE1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChosenTrainTableCell.swift; sourceTree = "<group>"; };
 		C9C9F8E01B5F1CBB00EF0FE4 /* TrainTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainTableCell.swift; sourceTree = "<group>"; };
 		C9C9F8E21B5F1FB400EF0FE4 /* apiKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apiKey.plist; sourceTree = "<group>"; };
+		C9DF14071B8E76C600B7F56B /* UIColor+useHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+useHex.swift"; sourceTree = "<group>"; };
 		CC67B6D777EFF0EEC853AAB4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		EF8378763AC586312C4B4ADE /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				C9C9F8DE1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift */,
+				C9DF14071B8E76C600B7F56B /* UIColor+useHex.swift */,
 				C99018941B547D73008BAB3A /* AppDelegate.swift */,
 				C99018961B547D73008BAB3A /* ViewController.swift */,
 				C9C9F8E21B5F1FB400EF0FE4 /* apiKey.plist */,
@@ -308,6 +311,7 @@
 				C9C9F8E41B630DA200EF0FE4 /* ViewController.swift in Sources */,
 				C919BF511B66F0B20065BC17 /* BartSettings.swift in Sources */,
 				C93390A21B6601E800BE5670 /* SettingsViewController.swift in Sources */,
+				C9DF14081B8E76C600B7F56B /* UIColor+useHex.swift in Sources */,
 				C9C9F8DF1B5F1AE200EF0FE4 /* ChosenTrainTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

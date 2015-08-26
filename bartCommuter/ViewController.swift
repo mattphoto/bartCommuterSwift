@@ -61,7 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToDestination")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToOrigin")
             }
-//            getServiceAdvisory()
+            getServiceAdvisory()
             getTrainDirection()
 
         } else {
@@ -79,7 +79,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
         if indexPath.row != 3 {
             let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
-            cell.backgroundColor = UIColorFromHex(etdIndicatorColors[indexPath.row])
+            cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[indexPath.row])
             cell.backgroundColor = UIColor.lightGrayColor()
 
             cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
@@ -321,9 +321,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //                    println(xml["root"]["bsa"]["expires"])
 //                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
 
-                    let bsaDescription = String(stringInterpolationSegment: xml["root"]["bsa"]["description"])
+                    let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
                     let bsaTime = String(stringInterpolationSegment: xml["root"]["bsa"]["posted"])
-                    let bsaMessage = bsaTime + bsaDescription
+                    let bsaMessage = bsaTime + bsaDescription!
                     let alertController = UIAlertController(title: "BART Service Advisory", message: bsaMessage, preferredStyle: .Alert)
                     let defaultAction = UIAlertAction(title: "ok", style: .Default, handler: nil)
                     alertController.addAction(defaultAction)
@@ -332,7 +332,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     // if advisory includes default text, don't pop an alert.
                     let noDelays = "No delays reported"
-                    if noDelays.rangeOfString(bsaDescription) != nil{
+                    if noDelays.rangeOfString(bsaDescription!) != nil{
                         self.presentViewController(alertController, animated: true, completion: nil)
                     }
                     
@@ -368,14 +368,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let defaultAction = UIAlertAction(title: "Got It!", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         self.presentViewController(alertController, animated: true, completion: nil)
-    }
-
-    /* Helper function: convert hex to UIColor */
-    func UIColorFromHex(rgbValue : UInt32, alpha : Double = 1.0) -> UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
 
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */

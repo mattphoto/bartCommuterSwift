@@ -35,7 +35,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var timer : NSTimer!
     
-    // main running loop
+    
+    // MARK: - Main Running Loop
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -72,17 +74,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
     
-    // Select TableView
+    // MARK: - Table Views
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
-        let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
+        let etdIndicatorColors : [UInt32] = [0xEEEEEE, 0xDDDDDD, 0xCCCCCC, 0xBBBBBB, 0xAAAAAA, 0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
     
         if indexPath.row != 3 {
-            let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
+            let cell : TrainTableCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
             cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[indexPath.row])
             cell.backgroundColor = UIColor.lightGrayColor()
 
-            cell.textLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
+            cell.individualTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
 //            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
             return cell
         } else {
@@ -92,16 +95,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return cell
         }
     }
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedTrainList.count
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row != 3 {
-            return 36
+            return 40
         } else {
-            return 400
+            return 360
         }
     }
     
@@ -172,8 +175,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         var trips = elem["trip"]
                         
                         for trip in trips {
-
-                            
                             var trainHead = trip["leg"][0].element!.attributes["trainHeadStation"]!
                                 trainDirections.append(trainHead)
                                 
@@ -280,6 +281,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         task.resume()
     }
     
+    // MARK: - Get Service Advisory
+
     func getServiceAdvisory() {
         
         let BASE_URL = "http://api.bart.gov/api/bsa.aspx"
@@ -322,21 +325,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
 
                     let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
-                    let bsaTime = String(stringInterpolationSegment: xml["root"]["bsa"]["posted"])
-                    let bsaMessage = bsaTime + bsaDescription!
+                    let bsaTime = xml["root"]["bsa"]["posted"].element?.text ?? ""
+                    let bsaMessage = bsaDescription! + "\n\n" + bsaTime
                     let alertController = UIAlertController(title: "BART Service Advisory", message: bsaMessage, preferredStyle: .Alert)
                     let defaultAction = UIAlertAction(title: "ok", style: .Default, handler: nil)
                     alertController.addAction(defaultAction)
                     
-                    println(bsaDescription)
                     
                     // if advisory includes default text, don't pop an alert.
-                    let noDelays = "No delays reported"
-                    if noDelays.rangeOfString(bsaDescription!) != nil{
+                    let noDelays = "No delays"
+                    println(bsaDescription!)
+                    println(noDelays.rangeOfString(bsaDescription!))
+                    if noDelays.rangeOfString(bsaDescription!) != nil {
                         self.presentViewController(alertController, animated: true, completion: nil)
                     }
-                    
-                    self.presentViewController(alertController, animated: true, completion: nil)
                     
 //                    <root>
 //                    <uri>http://api.bart.gov/api/bsa.aspx?cmd=bsa&date=today</uri>

@@ -18,3 +18,9 @@ extension UIColor {
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
 }
+
+extension UILabel {
+    func kern(kerningValue:CGFloat) {
+        self.attributedText =  NSAttributedString(string: self.text ?? "", attributes: [NSKernAttributeName:kerningValue, NSFontAttributeName:font, NSForegroundColorAttributeName:self.textColor])
+    }
+}

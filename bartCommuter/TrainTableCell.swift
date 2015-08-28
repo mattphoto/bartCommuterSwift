@@ -10,7 +10,7 @@ import UIKit
 
 class TrainTableCell: UITableViewCell {
 
-    @IBOutlet weak var trainLabel: UILabel!
+    @IBOutlet weak var individualTrainLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

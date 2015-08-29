@@ -21,12 +21,12 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         "Bay Fair",
         "Castro Valley",
         "Civic Center / UN Plaza",
-        "Coliseum/Oakland Airport",
+        "Coliseum / Oakland Airport",
         "Colma",
         "Concord",
         "Daly City",
         "Downtown Berkeley",
-        "Dublin/Pleasanton",
+        "Dublin /P leasanton",
         "El Cerrito del Norte",
         "El Cerrito Plaza",
         "Embarcadero",
@@ -193,22 +193,27 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     @IBAction func didTapDoneButton(sender: UIButton) {
         println("done button tapped!")
         
-        NSUserDefaults.standardUserDefaults().setObject(homeStation, forKey: "homeStation")
-        NSUserDefaults.standardUserDefaults().setObject(workStation, forKey: "workStation")
-        NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
-        NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
-        NSUserDefaults.standardUserDefaults().setObject(13, forKey: "hourToReverseDirection")
+        
+//        if (homeStation != nil) && (workStation != nil)
+//        {
+    
+            NSUserDefaults.standardUserDefaults().setObject(homeStation, forKey: "homeStation")
+            NSUserDefaults.standardUserDefaults().setObject(workStation, forKey: "workStation")
+            NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
+            NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
+            NSUserDefaults.standardUserDefaults().setObject(12.5, forKey: "hourToReverseDirection")
 
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//
-//        let hometuple = (homeStation, "a")
-//
-//        let array = ["Hello", "World", 3]
-//        defaults.setObject(array, forKey: "SavedArray")
-//
-//        NSUserDefaults.standardUserDefaults().setObject(array, forKey: "originStation")
-//        NSUserDefaults.standardUserDefaults().setObject(workStation, workTimeLabel.text!.toInt()), forKey: "destinationStation")
+    //        let defaults = NSUserDefaults.standardUserDefaults()
+    //
+    //        let hometuple = (homeStation, "a")
+    //
+    //        let array = ["Hello", "World", 3]
+    //        defaults.setObject(array, forKey: "SavedArray")
+    //
+    //        NSUserDefaults.standardUserDefaults().setObject(array, forKey: "originStation")
+    //        NSUserDefaults.standardUserDefaults().setObject(workStation, workTimeLabel.text!.toInt()), forKey: "destinationStation")
 
-        dismissViewControllerAnimated(true, completion: nil)
+            dismissViewControllerAnimated(true, completion: nil)
+//        }
     }
 }

@@ -79,7 +79,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Table Views
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cellDisplay : String
         let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
         print("current train index")
         print(currentTrainIndex)
@@ -108,7 +107,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if indexPath.row != currentTrainIndex {
             return 40
         } else {
-            return 360
+            return 375
         }
     }
     
@@ -118,7 +117,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 0
         for (index, train) in enumerate(sortedTrainList) {
             if train.minutes >= minutesToOrigin {
-                println("getIndex [\(index)] \(minutesToOrigin) next train: \(train.minutes)")
                 return index
             }
         }

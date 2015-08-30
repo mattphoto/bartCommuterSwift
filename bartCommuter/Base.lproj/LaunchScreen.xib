@@ -13,8 +13,8 @@
                 <userLayoutGuide location="28" affinity="minX"/>
             </userGuides>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CVs-xP-BrU">
-                    <rect key="frame" x="0.0" y="164" width="480" height="316"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CVs-xP-BrU">
+                    <rect key="frame" x="0.0" y="200" width="480" height="280"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Commuter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BvN-wV-yPG">
                             <rect key="frame" x="28" y="26" width="153" height="29"/>
@@ -25,8 +25,11 @@
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.56131784539473684" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="B A R T" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9m-Xf-BWN">
-                    <rect key="frame" x="28" y="90" width="197" height="66"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B A R T" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9m-Xf-BWN">
+                    <rect key="frame" x="28" y="104" width="197" height="102"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="197" id="hM5-3v-Rwk"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -34,7 +37,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="CVs-xP-BrU" secondAttribute="bottom" id="TRT-JD-jfE"/>
+                <constraint firstItem="CVs-xP-BrU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2BS-Wg-VIa"/>
+                <constraint firstItem="z9m-Xf-BWN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="28" id="F0F-pl-Uhu"/>
+                <constraint firstItem="CVs-xP-BrU" firstAttribute="top" secondItem="z9m-Xf-BWN" secondAttribute="bottom" constant="-6" id="Ibp-tT-IFW"/>
+                <constraint firstAttribute="trailing" secondItem="CVs-xP-BrU" secondAttribute="trailing" id="MxB-2w-Jgf"/>
+                <constraint firstItem="z9m-Xf-BWN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="104" id="PsB-56-WEn"/>
+                <constraint firstAttribute="bottom" secondItem="CVs-xP-BrU" secondAttribute="bottom" id="RuO-YE-UG7"/>
+                <constraint firstItem="CVs-xP-BrU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="200" id="gWe-T0-My2"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -23,6 +23,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     var sortedTrainList : [Train] = []
+    var currentTrainIndex : Int = 0
+    var currentTravelTime : Int = 0
     
     let hour : Int = {
         /* Get current hour */
@@ -78,19 +80,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cellDisplay : String
-        let etdIndicatorColors : [UInt32] = [0xEEEEEE, 0xDDDDDD, 0xCCCCCC, 0xBBBBBB, 0xAAAAAA, 0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
-    
-        if indexPath.row != 3 {
+        let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
+        print("current train index")
+        print(currentTrainIndex)
+
+        
+        if indexPath.row != currentTrainIndex {
             let cell : TrainTableCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
-            cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[indexPath.row])
-            cell.backgroundColor = UIColor.lightGrayColor()
+            cell.backgroundColor = UIColor.UIColorFromHex(0xCCCCCC)
 
             cell.individualTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
 //            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
-            cell.backgroundColor = UIColor.lightGrayColor()
+            cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[sortedTrainList[indexPath.row].minutes - self.currentTravelTime])
             cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
             return cell
         }
@@ -101,11 +105,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row != 3 {
+        if indexPath.row != currentTrainIndex {
             return 40
         } else {
             return 360
         }
+    }
+    
+    // MARK: - Get Current Train Index
+
+    func getCurrentTrainIndex(sortedTrainList: [Train]) -> Int? {
+        let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 0
+        for (index, train) in enumerate(sortedTrainList) {
+            if train.minutes >= minutesToOrigin {
+                println("getIndex [\(index)] \(minutesToOrigin) next train: \(train.minutes)")
+                return index
+            }
+        }
+        return nil
     }
     
     // get API key from plist that's .gitignored
@@ -260,10 +277,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     trainsList.sort({ $0.minutes < $1.minutes }) // magical!
 
                     self.sortedTrainList = trainsList
+                    self.currentTrainIndex = self.getCurrentTrainIndex(trainsList)!
+                    self.currentTravelTime = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
                     self.trainTableView.reloadData()
                     
                     for train in trainsList {
-                        println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor)")
+                        println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor) \(self.currentTrainIndex)")
                     }
                     
                     // show alert if trainsList returns empty array

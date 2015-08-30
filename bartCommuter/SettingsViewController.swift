@@ -201,7 +201,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
             NSUserDefaults.standardUserDefaults().setObject(workStation, forKey: "workStation")
             NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
             NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
-            NSUserDefaults.standardUserDefaults().setObject(12.5, forKey: "hourToReverseDirection")
+            NSUserDefaults.standardUserDefaults().setObject(13, forKey: "hourToReverseDirection")
 
     //        let defaults = NSUserDefaults.standardUserDefaults()
     //

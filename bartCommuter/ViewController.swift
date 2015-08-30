@@ -80,9 +80,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
-        print("current train index")
-        print(currentTrainIndex)
-
         
         if indexPath.row != currentTrainIndex {
             let cell : TrainTableCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell

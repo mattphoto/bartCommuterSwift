@@ -26,7 +26,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         "Concord",
         "Daly City",
         "Downtown Berkeley",
-        "Dublin /P leasanton",
+        "Dublin / Pleasanton",
         "El Cerrito del Norte",
         "El Cerrito Plaza",
         "Embarcadero",

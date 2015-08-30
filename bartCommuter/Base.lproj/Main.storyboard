@@ -89,7 +89,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="UoT-60-cm3" secondAttribute="trailing" id="NTf-ji-a64"/>
                             <constraint firstItem="Rqf-12-1XW" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="OpJ-Z9-D16"/>

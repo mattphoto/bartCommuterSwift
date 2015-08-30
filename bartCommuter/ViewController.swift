@@ -90,8 +90,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
-            cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[sortedTrainList[indexPath.row].minutes - self.currentTravelTime])
-            cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
+            if sortedTrainList[indexPath.row].minutes - self.currentTravelTime >= 0 {
+                cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[sortedTrainList[indexPath.row].minutes - self.currentTravelTime])
+                cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
+            }
             return cell
         }
     }
@@ -114,6 +116,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 0
         for (index, train) in enumerate(sortedTrainList) {
             if train.minutes >= minutesToOrigin {
+                println(index)
                 return index
             }
         }
@@ -268,22 +271,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                             }  // for estimate in estimates
                         } // if let i = find(trainDirections
                     } // for  etd in etds
-                    
-                    trainsList.sort({ $0.minutes < $1.minutes }) // magical!
 
-                    self.sortedTrainList = trainsList
-                    self.currentTrainIndex = self.getCurrentTrainIndex(trainsList)!
-                    self.currentTravelTime = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
-                    self.trainTableView.reloadData()
-                    
-                    for train in trainsList {
-                        println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor) \(self.currentTrainIndex)")
-                    }
-                    
+                    println(trainsList.count)
                     // show alert if trainsList returns empty array
                     if trainsList.count == 0 {
                         self.showAlertForNoTrains()
+                    } else {
+                    
+                        trainsList.sort({ $0.minutes < $1.minutes }) // magical!
+
+                        self.sortedTrainList = trainsList
+                        self.currentTrainIndex = self.getCurrentTrainIndex(trainsList) ?? 0
+                        self.currentTravelTime = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
+                        self.trainTableView.reloadData()
+                        
+                        for train in trainsList {
+                            println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor) \(self.currentTrainIndex)")
+                        }
                     }
+
                     
 
                 } // if let api call

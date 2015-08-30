@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bartCommuter/ViewController.swift"
-            timestampString = "462601873.011368"
+            timestampString = "462612759.902881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "buildTrainsList(_:origin:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bartCommuter/ViewController.swift"
-            timestampString = "462601873.011368"
+            timestampString = "462612759.902881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "buildTrainsList(_:origin:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bartCommuter/ViewController.swift"
-            timestampString = "462601873.011368"
+            timestampString = "462612759.902881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "getServiceAdvisory()"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,38 +106,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bartCommuter/ViewController.swift"
-            timestampString = "462601873.011368"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
-            landmarkName = "buildTrainsList(_:origin:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "bartCommuter/ViewController.swift"
-            timestampString = "462601873.011368"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
-            landmarkName = "buildTrainsList(_:origin:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "bartCommuter/ViewController.swift"
             timestampString = "462599164.091634"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -154,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bartCommuter/ViewController.swift"
-            timestampString = "462601873.011368"
+            timestampString = "462613007.226354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>

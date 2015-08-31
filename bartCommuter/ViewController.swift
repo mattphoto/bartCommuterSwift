@@ -14,6 +14,54 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var trainTableView: UITableView!
     
+    var stations = [
+        "12th": "12th St. / Oakland City Center",
+        "16th": "16th St. Mission",
+        "19th": "19th St. Oakland",
+        "24th": "24th St. Mission",
+        "ashb": "Ashby",
+        "balb": "Balboa Park",
+        "bayf": "Bay Fair",
+        "cast": "Castro Valley",
+        "civc": "Civic Center",
+        "cols": "Coliseum / Oakland Airport",
+        "colm": "Colma",
+        "conc": "Concord",
+        "daly": "Daly City",
+        "dbrk": "Downtown Berkeley",
+        "dubl": "Dublin / Pleasanton",
+        "deln": "El Cerrito del Norte",
+        "plza": "El Cerrito Plaza",
+        "embr": "Embarcadero",
+        "frmt": "Fremont",
+        "ftvl": "Fruitvale",
+        "glen": "Glen Park",
+        "hayw": "Hayward",
+        "lafy": "Lafayette",
+        "lake": "Lake Merritt",
+        "mcar": "MacArthur",
+        "mlbr": "Millbrae",
+        "mont": "Montgomery",
+        "nbrk": "North Berkeley",
+        "ncon": "North Concord / Martinez",
+        "orin": "Orinda",
+        "pitt": "Pittsburg / Bay Point",
+        "phil": "Pleasant Hill",
+        "powl": "Powell",
+        "rich": "Richmond",
+        "rock": "Rockridge",
+        "sbrn": "San Bruno",
+        "sanl": "San Leandro",
+        "sfia": "SFO Airport",
+        "shay": "South Hayward",
+        "ssan": "South San Francisco",
+        "ucty": "Union City",
+        "wcrk": "Walnut Creek",
+        "wdub": "West Dublin / Pleasanton",
+        "woak": "West Oakland",
+        "spcl": "Special"
+    ]
+        
     struct Train {
         var destination: String = ""
         var destinationCode: String = ""
@@ -79,7 +127,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Table Views
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5, 0x3f51b5]
+        let origin = NSUserDefaults.standardUserDefaults().objectForKey("origin") as! String
+        let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String
+        let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5]
         
         if indexPath.row != currentTrainIndex {
             let cell : TrainTableCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
@@ -90,8 +140,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
-            if sortedTrainList[indexPath.row].minutes - self.currentTravelTime >= 0 {
-                cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[sortedTrainList[indexPath.row].minutes - self.currentTravelTime])
+            print("train coming in: \(sortedTrainList[indexPath.row].minutes) - timeToStation: \(self.currentTravelTime) ")
+            println(sortedTrainList[indexPath.row].minutes - self.currentTravelTime)
+            cell.chosenDirection.text = "\(self.stations[origin]!) to \(stations[destination]!)"
+            cell.chosenTrainInfo.text = "\(sortedTrainList[indexPath.row].length) Cars - \(sortedTrainList[indexPath.row].destination)"
+            var etdColorTime = sortedTrainList[indexPath.row].minutes - self.currentTravelTime
+            if etdColorTime > 6 { etdColorTime = 7 } // catch out of range values
+            if etdColorTime >= 0 {
+                cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[etdColorTime])
                 cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
             }
             return cell
@@ -116,7 +172,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 0
         for (index, train) in enumerate(sortedTrainList) {
             if train.minutes >= minutesToOrigin {
-                println(index)
                 return index
             }
         }
@@ -135,16 +190,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func getTrainDirection() {
 
-        let origin = NSUserDefaults.standardUserDefaults().objectForKey("origin") as! String? ?? "WOAK"
-        let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String? ?? "EMBR"
+        let origin = NSUserDefaults.standardUserDefaults().objectForKey("origin") as! String
+        let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 5
         let minutesToDestination = NSUserDefaults.standardUserDefaults().objectForKey("minutesToDestination") as! Int? ?? 5
         
-        print("START getTrainDirection: ")
-        print(origin)
-        print(destination)
-        print(minutesToOrigin)
-        print(minutesToDestination)
+        print("getTrainDirection: \(origin)/\(destination) - \(minutesToOrigin)/\(minutesToDestination) - ")
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
@@ -272,7 +323,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         } // if let i = find(trainDirections
                     } // for  etd in etds
 
-                    println(trainsList.count)
                     // show alert if trainsList returns empty array
                     if trainsList.count == 0 {
                         self.showAlertForNoTrains()
@@ -354,11 +404,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     // if advisory includes default text, don't pop an alert.
                     let noDelays = "No delays"
-                    println(bsaDescription!)
-                    println(noDelays.rangeOfString(bsaDescription!))
-                    if noDelays.rangeOfString(bsaDescription!) != nil {
+                    print("bsa: \(bsaDescription!) rangeOfString: ")
+                    println(bsaDescription!.rangeOfString(noDelays))
+                    if bsaDescription!.rangeOfString(noDelays) == nil {
                         self.presentViewController(alertController, animated: true, completion: nil)
                     }
+
                     
 //                    <root>
 //                    <uri>http://api.bart.gov/api/bsa.aspx?cmd=bsa&date=today</uri>

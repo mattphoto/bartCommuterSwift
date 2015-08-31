@@ -11,6 +11,8 @@ import UIKit
 class ChosenTrainTableCell: UITableViewCell {
     
     @IBOutlet weak var chosenTrainLabel: UILabel!
+    @IBOutlet weak var chosenTrainInfo: UILabel!
+    @IBOutlet weak var chosenDirection: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

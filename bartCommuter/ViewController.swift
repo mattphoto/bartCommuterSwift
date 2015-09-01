@@ -115,12 +115,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             getServiceAdvisory()
             getTrainDirection()
-
         } else {
         // present user with a settings modal
             performSegueWithIdentifier("settingsSegue", sender: nil)
         }
-
         self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "getTrainDirection", userInfo: nil, repeats: true)
     }
     
@@ -325,6 +323,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
                     // show alert if trainsList returns empty array
                     if trainsList.count == 0 {
+                        self.timer.invalidate()
                         self.showAlertForNoTrains()
                     } else {
                     
@@ -385,7 +384,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
                     
                     var xml = SWXMLHash.parse(returnedData)
-//                    println(xml["root"]["time"])
                     //                    <time>16:53:00 PM PDT</time>
 //                    println(xml["root"]["bsa"]["description"])
 //                    <description>There is a major delay system wide due to a earlier medical emergency at Embarcadero Station.    Embarcadero Station is expected to be re-opened by 5pm.  </description>
@@ -394,6 +392,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //                    println(xml["root"]["bsa"]["expires"])
 //                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
 
+                    let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text
+                    println("bsaDelay: \(bsaDelay)")
+                    
                     let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
                     let bsaTime = xml["root"]["bsa"]["posted"].element?.text ?? ""
                     let bsaMessage = bsaDescription! + "\n\n" + bsaTime

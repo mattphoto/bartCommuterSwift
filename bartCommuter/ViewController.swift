@@ -138,8 +138,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return cell
         } else {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
-            print("train coming in: \(sortedTrainList[indexPath.row].minutes) - timeToStation: \(self.currentTravelTime) ")
-            println(sortedTrainList[indexPath.row].minutes - self.currentTravelTime)
+            println("train coming in: \(sortedTrainList[indexPath.row].minutes) - timeToStation: \(self.currentTravelTime) \(sortedTrainList[indexPath.row].minutes - self.currentTravelTime)")
             cell.chosenDirection.text = "\(self.stations[origin]!) to \(stations[destination]!)"
             cell.chosenTrainInfo.text = "\(sortedTrainList[indexPath.row].length) Cars - \(sortedTrainList[indexPath.row].destination)"
             var etdColorTime = sortedTrainList[indexPath.row].minutes - self.currentTravelTime
@@ -190,10 +189,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         let origin = NSUserDefaults.standardUserDefaults().objectForKey("origin") as! String
         let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String
-        let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 5
-        let minutesToDestination = NSUserDefaults.standardUserDefaults().objectForKey("minutesToDestination") as! Int? ?? 5
+        let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
         
-        print("getTrainDirection: \(origin)/\(destination) - \(minutesToOrigin)/\(minutesToDestination) - ")
+        print("getTrainDirection: \(origin)/\(destination) - \(minutesToOrigin)/ - ")
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
@@ -327,8 +325,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         self.showAlertForNoTrains()
                     } else {
                     
-                        trainsList.sort({ $0.minutes < $1.minutes }) // magical!
-
+                        trainsList.sort({ $0.minutes < $1.minutes })
                         self.sortedTrainList = trainsList
                         self.currentTrainIndex = self.getCurrentTrainIndex(trainsList) ?? 0
                         self.currentTravelTime = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int

@@ -105,12 +105,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeStation, forKey: "origin")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkStation, forKey: "destination")
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToOrigin")
-                NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToDestination")
             } else {
             // it's commute to home
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeStation, forKey: "destination")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkStation, forKey: "origin")
-                NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToDestination")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToOrigin")
             }
             getServiceAdvisory()
@@ -432,6 +430,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         /* 9 - Resume (execute) the task */
         task.resume()
+    }
+    
+    @IBAction func refresh(sender: UIBarButtonItem) {
+        getTrainDirection()
     }
 
     func showAlertForNoTrains() {

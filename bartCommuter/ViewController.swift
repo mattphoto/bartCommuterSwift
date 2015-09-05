@@ -105,10 +105,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeStation, forKey: "origin")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkStation, forKey: "destination")
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToOrigin")
+                NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToDestination")
+
             } else {
             // it's commute to home
                 NSUserDefaults.standardUserDefaults().setObject(savedHomeStation, forKey: "destination")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkStation, forKey: "origin")
+                NSUserDefaults.standardUserDefaults().setObject(savedHomeMinutesToStation, forKey: "minutesToDestination")
                 NSUserDefaults.standardUserDefaults().setObject(savedWorkMinutesToStation, forKey: "minutesToOrigin")
             }
             getServiceAdvisory()
@@ -436,6 +439,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         getTrainDirection()
     }
     
+    @IBAction func reverseDirection(sender: UIBarButtonItem) {
+        let origin = NSUserDefaults.standardUserDefaults().objectForKey("origin") as! String
+        let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String
+        let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
+        let minutesToDestination = NSUserDefaults.standardUserDefaults().objectForKey("minutesToDestination") as! Int
+
+        NSUserDefaults.standardUserDefaults().setObject(origin, forKey: "destination")
+        NSUserDefaults.standardUserDefaults().setObject(destination, forKey: "origin")
+        NSUserDefaults.standardUserDefaults().setObject(minutesToOrigin, forKey: "minutesToDestination")
+        NSUserDefaults.standardUserDefaults().setObject(minutesToDestination, forKey: "minutesToOrigin")
+
+        getTrainDirection()
+    }
     
 
     func showAlertForNoTrains() {

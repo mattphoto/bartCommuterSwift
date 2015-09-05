@@ -435,6 +435,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func refresh(sender: UIBarButtonItem) {
         getTrainDirection()
     }
+    
+    
 
     func showAlertForNoTrains() {
         let alertController = UIAlertController(title: "No Trains", message: "I think the BART trains are asleep now", preferredStyle: .Alert)

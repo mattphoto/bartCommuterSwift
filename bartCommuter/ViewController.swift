@@ -130,14 +130,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String
         let etdIndicatorColors : [UInt32] = [0xe51c23, 0xff9800, 0x259b24, 0x009688, 0x00BCD4, 0x03a9f4, 0x5677fc, 0x3f51b5]
         
-        if indexPath.row != currentTrainIndex {
-            let cell : TrainTableCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
-            cell.backgroundColor = UIColor.UIColorFromHex(0xCCCCCC)
-
-            cell.individualTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
-//            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
-            return cell
-        } else {
+        if indexPath.row == currentTrainIndex {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
             println("train coming in: \(sortedTrainList[indexPath.row].minutes) - timeToStation: \(self.currentTravelTime) \(sortedTrainList[indexPath.row].minutes - self.currentTravelTime)")
             cell.chosenDirection.text = "\(self.stations[origin]!) to \(stations[destination]!)"
@@ -148,6 +141,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 cell.backgroundColor = UIColor.UIColorFromHex(etdIndicatorColors[etdColorTime])
                 cell.chosenTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes)"
             }
+            return cell
+        } else {
+            let cell : TrainTableCell = tableView.dequeueReusableCellWithIdentifier("train", forIndexPath: indexPath) as! TrainTableCell
+            cell.backgroundColor = UIColor.UIColorFromHex(0xCCCCCC)
+            
+            cell.individualTrainLabel?.text = "\(sortedTrainList[indexPath.row].minutes) min - \(sortedTrainList[indexPath.row].length) cars - \(sortedTrainList[indexPath.row].destination)"
+            //            cell.textLabel?.textColor = UIColorFromHex(etdIndicatorColors[indexPath.row + 1])
             return cell
         }
     }
@@ -169,6 +169,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func getCurrentTrainIndex(sortedTrainList: [Train]) -> Int? {
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 0
         for (index, train) in enumerate(sortedTrainList) {
+            println("current train index\(index) -  trainMinutes \(train.minutes)")
             if train.minutes >= minutesToOrigin {
                 return index
             }
@@ -382,24 +383,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
                     
                     var xml = SWXMLHash.parse(returnedData)
-                    //                    <time>16:53:00 PM PDT</time>
-//                    println(xml["root"]["bsa"]["description"])
-//                    <description>There is a major delay system wide due to a earlier medical emergency at Embarcadero Station.    Embarcadero Station is expected to be re-opened by 5pm.  </description>
-//                    println(xml["root"]["bsa"]["posted"])
-//                    <posted>Mon Aug 24 2015 04:35 PM PDT</posted>
-//                    println(xml["root"]["bsa"]["expires"])
-//                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
 
                     let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text
                     println("bsaDelay: \(bsaDelay)")
-                    
+                    println(xml)
                     let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
                     let bsaTime = xml["root"]["bsa"]["posted"].element?.text ?? ""
                     let bsaMessage = bsaDescription! + "\n\n" + bsaTime
                     let alertController = UIAlertController(title: "BART Service Advisory", message: bsaMessage, preferredStyle: .Alert)
                     let defaultAction = UIAlertAction(title: "ok", style: .Default, handler: nil)
                     alertController.addAction(defaultAction)
-                    
                     
                     // if advisory includes default text, don't pop an alert.
                     let noDelays = "No delays"
@@ -408,24 +401,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     if bsaDescription!.rangeOfString(noDelays) == nil {
                         self.presentViewController(alertController, animated: true, completion: nil)
                     }
-
-                    
-//                    <root>
-//                    <uri>http://api.bart.gov/api/bsa.aspx?cmd=bsa&date=today</uri>
-//                    <date>08/24/2015</date>
-//                    <time>16:43:00 PM PDT</time>
-//                    <bsa id="135286">
-//                    <station>BART</station>
-//                    <type>DELAY</type>
-//                    <description>There is a major delay system wide due to a earlier medical emergency at Embarcadero Station.    Embarcadero Station is expected to be re-opened by 5pm.  </description>
-//                    <sms_text>Major delay system wide due to a earlier medical emergency at EMBR stn.    EMBR stn is expected to be re-opened by 5pm.</sms_text>
-//                    <posted>Mon Aug 24 2015 04:35 PM PDT</posted>
-//                    <expires>Thu Dec 31 2037 11:59 PM PST</expires>
-//                    </bsa>
-//                    <message/>
-//                    </root>
-
-                    
                 } // if let api call
             }) //NSOperationQueue.mainQueue
             
@@ -436,6 +411,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func refresh(sender: UIBarButtonItem) {
+        getServiceAdvisory()
         getTrainDirection()
     }
     
@@ -450,6 +426,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         NSUserDefaults.standardUserDefaults().setObject(minutesToOrigin, forKey: "minutesToDestination")
         NSUserDefaults.standardUserDefaults().setObject(minutesToDestination, forKey: "minutesToOrigin")
 
+        getServiceAdvisory()
         getTrainDirection()
     }
     

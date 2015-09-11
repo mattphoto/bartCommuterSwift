@@ -85,6 +85,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var timer : NSTimer!
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
     
     // MARK: - Main Running Loop
     

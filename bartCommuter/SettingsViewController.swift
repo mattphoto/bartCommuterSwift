@@ -120,6 +120,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.trainPicker.dataSource = self;
         self.trainPicker.delegate = self;
 

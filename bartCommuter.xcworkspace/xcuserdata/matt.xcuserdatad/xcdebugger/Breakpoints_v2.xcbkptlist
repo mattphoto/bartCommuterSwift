@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "bartCommuter/ViewController.swift"
-            timestampString = "463132923.881238"
+            timestampString = "463446410.220678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "getServiceAdvisory()"
             landmarkType = "5">
          </BreakpointContent>

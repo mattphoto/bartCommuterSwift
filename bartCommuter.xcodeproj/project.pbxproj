@@ -206,6 +206,7 @@
 				TargetAttributes = {
 					C990188E1B547D73008BAB3A = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 6G929K9MX6;
 					};
 					C99018A31B547D73008BAB3A = {
 						CreatedOnToolsVersion = 6.4;
@@ -440,7 +441,9 @@
 			baseConfigurationReference = BB3012CB9A2D02F32702664D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = bartCommuter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -451,7 +454,9 @@
 			baseConfigurationReference = CC67B6D777EFF0EEC853AAB4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = bartCommuter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -386,7 +386,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
                     let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text
                     println("bsaDelay: \(bsaDelay)")
-                    println(xml)
                     let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
                     let bsaTime = xml["root"]["bsa"]["posted"].element?.text ?? ""
                     let bsaMessage = bsaDescription! + "\n\n" + bsaTime

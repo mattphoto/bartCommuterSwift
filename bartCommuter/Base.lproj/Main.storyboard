@@ -181,7 +181,7 @@
                                 </connections>
                             </stepper>
                             <segmentedControl opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="310-2b-1zy">
-                                <rect key="frame" x="28" y="170" width="265" height="29"/>
+                                <rect key="frame" x="28" y="170" width="264" height="29"/>
                                 <segments>
                                     <segment title="Home Station"/>
                                     <segment title="Work Station"/>
@@ -291,7 +291,7 @@
                             <constraint firstItem="7Zh-D4-Nyl" firstAttribute="top" secondItem="h3M-9Q-RIO" secondAttribute="bottom" constant="59" id="VwY-l9-hx0"/>
                             <constraint firstItem="7Zh-D4-Nyl" firstAttribute="top" secondItem="l00-kx-BtF" secondAttribute="bottom" constant="46" id="X3B-ow-XyI"/>
                             <constraint firstItem="r9l-X5-OaL" firstAttribute="top" secondItem="HVS-3F-07c" secondAttribute="bottom" constant="8" id="Zpz-sV-jrI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="310-2b-1zy" secondAttribute="trailing" constant="11" id="aEp-ZQ-xRQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="310-2b-1zy" secondAttribute="trailing" constant="12" id="aEp-ZQ-xRQ"/>
                             <constraint firstItem="h3M-9Q-RIO" firstAttribute="top" secondItem="310-2b-1zy" secondAttribute="bottom" constant="8" id="dBC-36-40O"/>
                             <constraint firstAttribute="trailing" secondItem="Ccr-si-gkM" secondAttribute="trailing" constant="44" id="dv3-em-fC8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HVS-3F-07c" secondAttribute="trailing" constant="56" id="ftm-xB-O31"/>
@@ -314,6 +314,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="BCH-jQ-jEU"/>
                                 <exclude reference="4WY-KC-fdB"/>
                                 <exclude reference="6d1-DO-HMI"/>
                                 <exclude reference="99N-vs-D5u"/>

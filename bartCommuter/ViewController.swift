@@ -90,6 +90,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // MARK: - Main Running Loop
+
+    override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "getServiceAdvisory", name: UIApplicationDidBecomeActiveNotification, object: nil)
+    }
+    override func viewDidDisappear(animated: Bool) {
+        self.timer.invalidate()
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -259,6 +266,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Build Trains List
     
     func buildTrainsList(trainDirections: [String], origin: String) {
+        
+        println("calling bart...")
         
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"

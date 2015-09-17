@@ -10,6 +10,53 @@ import UIKit
 
 class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
+    var stations = [
+        "12th": "12th St. Oakland City Center",
+        "16th": "16th St. Mission",
+        "19th": "19th St. Oakland",
+        "24th": "24th St. Mission",
+        "ashb": "Ashby",
+        "balb": "Balboa Park",
+        "bayf": "Bay Fair",
+        "cast": "Castro Valley",
+        "civc": "Civic Center",
+        "cols": "Coliseum / Oakland Airport",
+        "colm": "Colma",
+        "conc": "Concord",
+        "daly": "Daly City",
+        "dbrk": "Downtown Berkeley",
+        "dubl": "Dublin / Pleasanton",
+        "deln": "El Cerrito del Norte",
+        "plza": "El Cerrito Plaza",
+        "embr": "Embarcadero",
+        "frmt": "Fremont",
+        "ftvl": "Fruitvale",
+        "glen": "Glen Park",
+        "hayw": "Hayward",
+        "lafy": "Lafayette",
+        "lake": "Lake Merritt",
+        "mcar": "MacArthur",
+        "mlbr": "Millbrae",
+        "mont": "Montgomery",
+        "nbrk": "North Berkeley",
+        "ncon": "North Concord / Martinez",
+        "orin": "Orinda",
+        "pitt": "Pittsburg / Bay Point",
+        "phil": "Pleasant Hill",
+        "powl": "Powell",
+        "rich": "Richmond",
+        "rock": "Rockridge",
+        "sbrn": "San Bruno",
+        "sanl": "San Leandro",
+        "sfia": "San Francisco Int'l Airport",
+        "shay": "South Hayward",
+        "ssan": "South San Francisco",
+        "ucty": "Union City",
+        "wcrk": "Walnut Creek",
+        "wdub": "West Dublin",
+        "woak": "West Oakland"
+    ]
+
     var pickerDataSource : [String] = [
         "please select station",
         "12th St. Oakland City Center",
@@ -124,9 +171,6 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         self.trainPicker.dataSource = self;
         self.trainPicker.delegate = self;
 
-        homeTimeStepper.value = 5
-        workTimeStepper.value = 5
-
         if let
             savedHomeStation = NSUserDefaults.standardUserDefaults().objectForKey("homeStation") as? String,
             savedWorkStation = NSUserDefaults.standardUserDefaults().objectForKey("workStation") as? String,
@@ -137,6 +181,13 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
             workStation = savedWorkStation
             homeTimeStepper.value = Double(savedHomeMinutesToStation)
             workTimeStepper.value = Double(savedWorkMinutesToStation)
+            homeTimeLabel.text = String(savedHomeMinutesToStation)
+            workTimeLabel.text = String(savedWorkMinutesToStation)
+            homeStationLabel.text = stations[savedHomeStation]
+            workStationLabel.text = stations[savedWorkStation]
+        } else {
+            homeTimeStepper.value = 5
+            workTimeStepper.value = 5
 
         }
         homeTimeStepper.maximumValue = 59

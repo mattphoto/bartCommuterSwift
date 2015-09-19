@@ -78,7 +78,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         /* Get current hour */
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: date)
+        let components = calendar.components([.Hour, .Minute], fromDate: date)
         let hour = components.hour
         return hour
     }()
@@ -142,7 +142,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if indexPath.row == currentTrainIndex {
             let cell : ChosenTrainTableCell = tableView.dequeueReusableCellWithIdentifier("chosenTrain", forIndexPath: indexPath) as! ChosenTrainTableCell
-            println("train coming in: \(sortedTrainList[indexPath.row].minutes) - timeToStation: \(self.currentTravelTime) \(sortedTrainList[indexPath.row].minutes - self.currentTravelTime)")
+            print("train coming in: \(sortedTrainList[indexPath.row].minutes) - timeToStation: \(self.currentTravelTime) \(sortedTrainList[indexPath.row].minutes - self.currentTravelTime)")
             cell.chosenDirection.text = "\(self.stations[origin]!) to \(stations[destination]!)"
             cell.chosenTrainInfo.text = "\(sortedTrainList[indexPath.row].length) Cars - \(sortedTrainList[indexPath.row].destination)"
             var etdColorTime = sortedTrainList[indexPath.row].minutes - self.currentTravelTime
@@ -178,8 +178,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func getCurrentTrainIndex(sortedTrainList: [Train]) -> Int? {
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int? ?? 0
-        for (index, train) in enumerate(sortedTrainList) {
-            println("current train index\(index) -  trainMinutes \(train.minutes)")
+        for (index, train) in sortedTrainList.enumerate() {
+            print("current train index\(index) -  trainMinutes \(train.minutes)")
             if train.minutes >= minutesToOrigin {
                 return index
             }
@@ -203,7 +203,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let destination = NSUserDefaults.standardUserDefaults().objectForKey("destination") as! String
         let minutesToOrigin = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
         
-        print("getTrainDirection: \(origin)/\(destination) - \(minutesToOrigin)/ - ")
+        print("getTrainDirection: \(origin)/\(destination) - \(minutesToOrigin)/ - ", terminator: "")
         
         let BASE_URL = "http://api.bart.gov/api/sched.aspx"
         let CMD = "depart"
@@ -235,12 +235,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             NSOperationQueue.mainQueue().addOperationWithBlock({
                 if let error = downloadError {
-                    println("Could not complete the request \(error)")
+                    print("Could not complete the request \(error)")
                 } else {
                     /* 5 - Success! Parse the data */
                     var parsingError: NSError? = nil
                     
-                    var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                    var returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
                     
                     var xml = SWXMLHash.parse(returnedData)
                     var trainDirections : [String] = []
@@ -267,7 +267,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func buildTrainsList(trainDirections: [String], origin: String) {
         
-        println("calling bart...")
+        print("calling bart...")
         
         let BASE_URL = "http://api.bart.gov/api/etd.aspx"
         let CMD = "etd"
@@ -292,12 +292,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             NSOperationQueue.mainQueue().addOperationWithBlock({
 
                 if let error = downloadError {
-                    println("Could not complete the request \(error)")
+                    print("Could not complete the request \(error)")
                 } else {
                     /* 5 - Success! Parse the data */
                     var parsingError: NSError? = nil
                     
-                    var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                    var returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
                     
                     var xml = SWXMLHash.parse(returnedData)
                     
@@ -306,12 +306,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     var trainsList : [Train] = []
 
-                    println(trainDirections)
+                    print(trainDirections)
                     
                     for etd in etds{
                         var train = Train()
 
-                        if let i = find(trainDirections, etd["abbreviation"].element!.text!) {
+                        if let i = trainDirections.indexOf((etd["abbreviation"].element!.text!)) {
                             
                             var estimates = etd["estimate"]
                             for estimate in estimates {
@@ -323,7 +323,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                                 
                                 var trainMinutes = estimate["minutes"].element!.text!
                                 if trainMinutes != "Leaving" {
-                                    train.minutes = (estimate["minutes"].element!.text!).toInt()!
+                                    train.minutes = Int((estimate["minutes"].element!.text!))!
                                 } else {
                                     train.minutes = 0
                                 }
@@ -339,14 +339,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         self.showAlertForNoTrains()
                     } else {
                     
-                        trainsList.sort({ $0.minutes < $1.minutes })
+                        trainsList.sortInPlace({ $0.minutes < $1.minutes })
                         self.sortedTrainList = trainsList
                         self.currentTrainIndex = self.getCurrentTrainIndex(trainsList) ?? 0
                         self.currentTravelTime = NSUserDefaults.standardUserDefaults().objectForKey("minutesToOrigin") as! Int
                         self.trainTableView.reloadData()
                         
                         for train in trainsList {
-                            println("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor) \(self.currentTrainIndex)")
+                            print("Train: \(train.minutes) \(train.destination) \(train.destinationCode) \(train.length) \(train.hexColor) \(self.currentTrainIndex)")
                         }
                     }
 
@@ -387,17 +387,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             NSOperationQueue.mainQueue().addOperationWithBlock({
                 
                 if let error = downloadError {
-                    println("Could not complete the request \(error)")
+                    print("Could not complete the request \(error)")
                 } else {
                     /* 5 - Success! Parse the data */
                     var parsingError: NSError? = nil
                     
-                    var returnedData = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+                    var returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
                     
                     var xml = SWXMLHash.parse(returnedData)
 
                     let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text
-                    println("bsaDelay: \(bsaDelay)")
+                    print("bsaDelay: \(bsaDelay)")
                     let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
                     let bsaTime = xml["root"]["bsa"]["posted"].element?.text ?? ""
                     let bsaMessage = bsaDescription! + "\n\n" + bsaTime
@@ -407,8 +407,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     // if advisory includes default text, don't pop an alert.
                     let noDelays = "No delays"
-                    print("bsa: \(bsaDescription!) rangeOfString: ")
-                    println(bsaDescription!.rangeOfString(noDelays))
+                    print("bsa: \(bsaDescription!) rangeOfString: ", terminator: "")
+                    print(bsaDescription!.rangeOfString(noDelays))
                     if bsaDescription!.rangeOfString(noDelays) == nil {
                         self.presentViewController(alertController, animated: true, completion: nil)
                     }
@@ -460,7 +460,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             /* Append it */
             urlVars += [key + "=" + "\(escapedValue!)"]
         }
-        return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
 }
 

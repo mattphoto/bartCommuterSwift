@@ -207,7 +207,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         return pickerDataSource.count;
     }
     
-    func pickerView(trainPicker: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(trainPicker: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerDataSource[row]
     }
     
@@ -243,7 +243,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     }
     
     @IBAction func didTapDoneButton(sender: UIButton) {
-        println("done button tapped!")
+        print("done button tapped!")
         
         
 //        if (homeStation != nil) && (workStation != nil)
@@ -251,8 +251,8 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
             NSUserDefaults.standardUserDefaults().setObject(homeStation, forKey: "homeStation")
             NSUserDefaults.standardUserDefaults().setObject(workStation, forKey: "workStation")
-            NSUserDefaults.standardUserDefaults().setObject(homeTimeLabel.text!.toInt(), forKey: "homeMinutesToStation")
-            NSUserDefaults.standardUserDefaults().setObject(workTimeLabel.text!.toInt(), forKey: "workMinutesToStation")
+            NSUserDefaults.standardUserDefaults().setObject(Int(homeTimeLabel.text!), forKey: "homeMinutesToStation")
+            NSUserDefaults.standardUserDefaults().setObject(Int(workTimeLabel.text!), forKey: "workMinutesToStation")
             NSUserDefaults.standardUserDefaults().setObject(13, forKey: "hourToReverseDirection")
 
     //        let defaults = NSUserDefaults.standardUserDefaults()

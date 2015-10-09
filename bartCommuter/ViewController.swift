@@ -85,15 +85,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var timer : NSTimer!
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return UIStatusBarStyle.LightContent
+//    }
     
     // MARK: - Main Running Loop
 
     override func viewDidLoad() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getServiceAdvisory", name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
+    
     override func viewDidDisappear(animated: Bool) {
         self.timer.invalidate()
     }
@@ -240,16 +241,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     /* 5 - Success! Parse the data */
                     var parsingError: NSError? = nil
                     
-                    var returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+                    let returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
                     
-                    var xml = SWXMLHash.parse(returnedData)
+                    let xml = SWXMLHash.parse(returnedData)
                     var trainDirections : [String] = []
 
                     for elem in xml["root"]["schedule"]["request"] {
-                        var trips = elem["trip"]
+                        let trips = elem["trip"]
                         
                         for trip in trips {
-                            var trainHead = trip["leg"][0].element!.attributes["trainHeadStation"]!
+                            let trainHead = trip["leg"][0].element!.attributes["trainHeadStation"]!
                                 trainDirections.append(trainHead)
                                 
                         }
@@ -297,11 +298,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     /* 5 - Success! Parse the data */
                     var parsingError: NSError? = nil
                     
-                    var returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+                    let returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
                     
-                    var xml = SWXMLHash.parse(returnedData)
+                    let xml = SWXMLHash.parse(returnedData)
                     
-                    var etds = xml["root"]["station"]["etd"]
+                    let etds = xml["root"]["station"]["etd"]
                 
                     
                     var trainsList : [Train] = []
@@ -313,7 +314,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
                         if let i = trainDirections.indexOf((etd["abbreviation"].element!.text!)) {
                             
-                            var estimates = etd["estimate"]
+                            let estimates = etd["estimate"]
                             for estimate in estimates {
                                 
                                 train.destination = etd["destination"].element!.text!
@@ -321,7 +322,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                                 train.length = estimate["length"].element!.text!
                                 train.hexColor = estimate["hexcolor"].element!.text!
                                 
-                                var trainMinutes = estimate["minutes"].element!.text!
+                                let trainMinutes = estimate["minutes"].element!.text!
                                 if trainMinutes != "Leaving" {
                                     train.minutes = Int((estimate["minutes"].element!.text!))!
                                 } else {
@@ -392,12 +393,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     /* 5 - Success! Parse the data */
                     var parsingError: NSError? = nil
                     
-                    var returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+                    let returnedData = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
                     
-                    var xml = SWXMLHash.parse(returnedData)
+                    let xml = SWXMLHash.parse(returnedData)
 
-                    let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text
-                    print("bsaDelay: \(bsaDelay)")
+                    print(xml)
+                    print(xml["root"]["bsa"])
+                    print("eha")
+
+                    print(xml["root"]["bsa"][0]["description"])
+                    print("huh")
+                    if let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text {
+                        print("bsaDelay: \(bsaDelay)")
+                    }
+                    
                     let bsaDescription =  xml["root"]["bsa"]["description"].element!.text
                     let bsaTime = xml["root"]["bsa"]["posted"].element?.text ?? ""
                     let bsaMessage = bsaDescription! + "\n\n" + bsaTime

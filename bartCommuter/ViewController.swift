@@ -397,10 +397,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     let xml = SWXMLHash.parse(returnedData)
 
-                    print(xml)
-                    print(xml["root"]["bsa"])
-                    print("eha")
-
                     print(xml["root"]["bsa"][0]["description"])
                     print("huh")
                     if let bsaDelay =  xml["root"]["bsa"]["delay"].element?.text {
